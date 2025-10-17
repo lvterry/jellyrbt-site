@@ -371,12 +371,6 @@
                     subscriptionManagerInitialized = false;
                 }
             });
-
-            // Check after auth init completes and init if user exists
-            if (window.authManager.currentUser && !subscriptionManagerInitialized) {
-                await window.subscriptionManager.init();
-                subscriptionManagerInitialized = true;
-            }
         });
     </script>
 </body>
