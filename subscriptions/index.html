@@ -86,13 +86,7 @@
             <div class="subscriptions-container">
                 <div class="subscriptions-header">
                     <h2>Your Subscriptions</h2>
-                    <div class="header-actions">
-                        <label class="toggle-label">
-                            <input type="checkbox" id="show-inactive" onchange="subscriptionManager.toggleShowInactive()">
-                            <span>Show Inactive</span>
-                        </label>
-                        <button id="add-subscription-btn" class="btn btn-primary">+ Add Subscription</button>
-                    </div>
+                    <button id="add-subscription-btn" class="btn btn-primary">+ Add Subscription</button>
                 </div>
                 <div id="subscriptions-list" class="subscriptions-list">
                     <!-- Subscriptions will be rendered here -->
@@ -175,7 +169,6 @@
                 </form>
             </div>
         </div>
-        </section>
     </div>
 
     <!-- Supabase SDK -->
@@ -340,21 +333,28 @@
                 }
             });
 
+            // Track if subscription manager has been initialized
+            let subscriptionManagerInitialized = false;
+
             // Listen for auth state changes and initialize subscription manager
             window.authManager.onAuthStateChange(async (user) => {
                 if (user) {
-                    await window.subscriptionManager.init();
+                    if (!subscriptionManagerInitialized) {
+                        await window.subscriptionManager.init();
+                        subscriptionManagerInitialized = true;
+                    }
                 } else {
                     window.subscriptionManager.cleanup();
                     window.subscriptionManager.subscriptions = [];
                     window.subscriptionManager.render();
+                    subscriptionManagerInitialized = false;
                 }
             });
 
-            // Check after auth init completes
-            // The auth init already checked session, so trigger init if user exists
-            if (window.authManager.currentUser) {
+            // Check after auth init completes and init if user exists
+            if (window.authManager.currentUser && !subscriptionManagerInitialized) {
                 await window.subscriptionManager.init();
+                subscriptionManagerInitialized = true;
             }
         });
     </script>

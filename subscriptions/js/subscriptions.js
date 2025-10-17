@@ -4,7 +4,6 @@ class SubscriptionManager {
         this.supabase = window.supabaseClient;
         this.subscriptions = [];
         this.realtimeChannel = null;
-        this.showInactive = false;
     }
 
     // Initialize real-time subscription
@@ -175,11 +174,9 @@ class SubscriptionManager {
         return this.subscriptions.filter(s => s.active);
     }
 
-    // Get all subscriptions (filtered by showInactive setting)
+    // Get all subscriptions (always show all)
     getDisplaySubscriptions() {
-        return this.showInactive
-            ? this.subscriptions
-            : this.getActiveSubscriptions();
+        return this.subscriptions;
     }
 
     // Calculate total costs
@@ -332,12 +329,6 @@ class SubscriptionManager {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
-    }
-
-    // Toggle show inactive
-    toggleShowInactive() {
-        this.showInactive = !this.showInactive;
-        this.render();
     }
 
     // Cleanup

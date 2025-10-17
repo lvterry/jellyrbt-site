@@ -96,8 +96,9 @@ class AuthManager {
 
         if (this.currentUser) {
             // User is signed in
-            authSection.style.display = 'none';
-            appSection.style.display = 'block';
+            if (authSection) authSection.style.display = 'none';
+            if (appSection) appSection.style.display = 'block';
+            if (userInfo) userInfo.style.display = 'flex';
 
             // Display user info
             if (userName) {
@@ -111,8 +112,9 @@ class AuthManager {
             }
         } else {
             // User is signed out
-            authSection.style.display = 'flex';
-            appSection.style.display = 'none';
+            if (authSection) authSection.style.display = 'flex';
+            if (appSection) appSection.style.display = 'none';
+            if (userInfo) userInfo.style.display = 'none';
         }
     }
 
