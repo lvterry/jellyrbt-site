@@ -472,18 +472,13 @@ body {
     border-top: 1px solid #e5e7eb;
 }
 
-.subscription-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.subscription-monthly {
+    font-size: 14px;
+    color: #667eea;
+    font-weight: 600;
+    margin-top: 12px;
     padding-top: 12px;
     border-top: 1px solid #e5e7eb;
-}
-
-.subscription-monthly {
-    font-size: 13px;
-    color: #666;
-    font-weight: 600;
 }
 
 /* Responsive Design */

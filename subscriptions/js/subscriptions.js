@@ -133,14 +133,6 @@ class SubscriptionManager {
         }
     }
 
-    // Toggle subscription active status
-    async toggleActive(id) {
-        const subscription = this.subscriptions.find(s => s.id === id);
-        if (!subscription) return { success: false, error: 'Subscription not found' };
-
-        return await this.updateSubscription(id, { active: !subscription.active });
-    }
-
     // Calculate monthly cost (normalize all to monthly)
     calculateMonthlyCost(cost, billingCycle) {
         switch (billingCycle.toLowerCase()) {
@@ -259,16 +251,6 @@ class SubscriptionManager {
                     </div>
                     ${sub.description ? `<div class="subscription-description">${this.escapeHtml(sub.description)}</div>` : ''}
                 </div>
-                <div class="subscription-footer">
-                    <label class="toggle-label">
-                        <input type="checkbox" ${sub.active ? 'checked' : ''}
-                               onchange="subscriptionManager.toggleActive('${sub.id}')">
-                        <span>${sub.active ? 'Active' : 'Inactive'}</span>
-                    </label>
-                    <span class="subscription-monthly">
-                        ${this.formatCurrency(this.calculateMonthlyCost(sub.cost, sub.billing_cycle), sub.currency)}/mo
-                    </span>
-                </div>
             </div>
         `).join('');
 
@@ -308,6 +290,7 @@ class SubscriptionManager {
             : '';
         document.getElementById('category').value = subscription.category || '';
         document.getElementById('description').value = subscription.description || '';
+        document.getElementById('active').checked = subscription.active;
 
         // Update form button text and title
         document.getElementById('submit-btn').textContent = 'Update Subscription';
