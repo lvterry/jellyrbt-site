@@ -64,9 +64,6 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .btn-primary {
@@ -141,6 +138,10 @@ body {
 .email-auth-form {
     margin-bottom: 20px;
     text-align: left;
+}
+
+.email-auth-form .form-group {
+    margin-bottom: 16px;
 }
 
 .auth-tabs {
