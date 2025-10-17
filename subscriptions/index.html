@@ -328,6 +328,19 @@
                 if (subscriptionId) {
                     // Update existing subscription
                     result = await window.subscriptionManager.updateSubscription(subscriptionId, formData);
+
+                    if (result.success) {
+                        // Manually update the local subscription for immediate UI feedback
+                        const index = window.subscriptionManager.subscriptions.findIndex(s => s.id === subscriptionId);
+                        if (index !== -1) {
+                            window.subscriptionManager.subscriptions[index] = {
+                                ...window.subscriptionManager.subscriptions[index],
+                                ...formData
+                            };
+                            // Trigger immediate re-render
+                            window.subscriptionManager.render();
+                        }
+                    }
                 } else {
                     // Add new subscription
                     result = await window.subscriptionManager.addSubscription(formData);
