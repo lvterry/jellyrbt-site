@@ -90,13 +90,28 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 18px;
-    padding: 4px 8px;
-    transition: transform 0.2s;
+    padding: 6px;
+    transition: all 0.2s;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
 }
 
 .btn-icon:hover {
-    transform: scale(1.2);
+    background: #f3f4f6;
+    color: #667eea;
+}
+
+.btn-icon-delete:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.btn-icon svg {
+    width: 18px;
+    height: 18px;
 }
 
 /* Authentication Section */
@@ -403,6 +418,12 @@ body {
 .subscription-actions {
     display: flex;
     gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.subscription-card:hover .subscription-actions {
+    opacity: 1;
 }
 
 .subscription-body {

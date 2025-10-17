@@ -241,10 +241,10 @@ class SubscriptionManager {
                     <h3 class="subscription-name">${this.escapeHtml(sub.name)}</h3>
                     <div class="subscription-actions">
                         <button class="btn-icon" onclick="subscriptionManager.editSubscription('${sub.id}')" title="Edit">
-                            ✏️
+                            <i data-lucide="pencil"></i>
                         </button>
-                        <button class="btn-icon" onclick="subscriptionManager.confirmDelete('${sub.id}')" title="Delete">
-                            🗑️
+                        <button class="btn-icon btn-icon-delete" onclick="subscriptionManager.confirmDelete('${sub.id}')" title="Delete">
+                            <i data-lucide="trash-2"></i>
                         </button>
                     </div>
                 </div>
@@ -271,6 +271,11 @@ class SubscriptionManager {
                 </div>
             </div>
         `).join('');
+
+        // Initialize Lucide icons
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
     }
 
     // Render totals
