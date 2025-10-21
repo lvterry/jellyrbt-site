@@ -13,13 +13,33 @@ h1 {
     margin-bottom: 12px;
 }
 
+p {
+    margin: 0;
+}
+
+.btn {
+    font-size: 1em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: #111;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.btn:hover {
+    background: #222;
+}
+
 h3 {
     margin: 0;
     margin-bottom: 8px;
 }
 
-p {
-    margin: 0;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sub-list {
