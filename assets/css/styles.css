@@ -27,3 +27,18 @@ p {
     width: 100px;
     height: 100px;
 }
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 60px;
+    }
+
+    p {
+        font-size: 28px;
+    }
+
+    .logo {
+        width: 80px;
+        height: 80px;
+    }
+}
