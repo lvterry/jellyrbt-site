@@ -1,5 +1,7 @@
+@import url(clash-display.css);
+
 body {
-    font-family: Passenger-Sans,sans-serif;
+    font-family: ClashDisplay-Regular,sans-serif;
     font-weight: normal;
     color: #2f2f2f;
     background-color: #ffffff;
@@ -14,8 +16,8 @@ main {
 }
 
 h1 {
+    font-family: ClashDisplay-SemiBold,sans-serif;
     font-size: 100px;
-    font-weight: 700;
     margin-top: 24px;
 }
 
