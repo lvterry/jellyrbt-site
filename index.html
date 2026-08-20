@@ -5,19 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jelly Rabbit Studio</title>
     <meta name="description" content="Jelly Rabbit is a small design and development studio exploring what's possible in this new AI world." />
+    <link rel="preload" href="assets/fonts/ClashDisplay-Variable.woff2" as="font" type="font/woff2">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <script>
+        // Intro animations play once per session; the hero shows static on returns.
+        try {
+            if (sessionStorage.getItem('jr-intro-seen')) {
+                document.documentElement.classList.add('no-intro');
+            } else {
+                sessionStorage.setItem('jr-intro-seen', '1');
+            }
+        } catch (e) {}
+    </script>
 </head>
 <body>
-    <div class="floating-background" aria-hidden="true">
-        <span class="jelly jelly-1"></span>
-        <span class="jelly jelly-2"></span>
-        <span class="jelly jelly-3"></span>
+    <div class="hero">
+        <div class="hero-wash" aria-hidden="true"></div>
+        <div class="hero-body">
+            <p class="hero-kicker hero-anim">Small design &amp; development studio</p>
+            <div class="hero-mark" role="img" aria-label="Jelly Rabbit logo">
+                <div class="hero-mark-tilt">
+                    <div class="hero-mark-wobble">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path fill="currentColor" fill-opacity="0.9" d="M31.2708 33.2041C46.6965 32.1168 59.5005 35.4782 59.8695 40.7119C60.2383 45.9456 48.0324 51.0699 32.6068 52.1573C17.1811 53.2447 4.37706 49.8831 4.00812 44.6494C3.63975 39.4159 15.8455 34.2916 31.2708 33.2041ZM20.1654 16.4766C28.8398 11.4509 37.6912 10.5162 39.9349 14.3887C42.1782 18.2614 36.9646 25.4753 28.2904 30.501C19.6161 35.5267 10.7656 36.4612 8.5218 32.5889C6.27811 28.7164 11.4909 21.5025 20.1654 16.4766Z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="hero-shadow" aria-hidden="true"></div>
+            </div>
+            <h1 class="hero-title hero-anim"><span class="hero-peach">Jelly</span> Rabbit</h1>
+            <p class="hero-tagline hero-anim">We create thoughtfully designed experiences that blend elegance with functionality.</p>
+        </div>
     </div>
-    <main>
-        <img src="assets/logo.svg" alt="Jelly Rabbit Logo" class="logo">
-        <h1>Jelly Rabbit</h1>
-        <p>We create thoughtfully designed experiences that blend elegance with functionality. </p>
-    </main>
+    <script src="assets/js/hero.js"></script>
 </body>
 </html>
