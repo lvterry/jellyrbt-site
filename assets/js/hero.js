@@ -287,7 +287,7 @@
     present.drawImage(backCanvas,0,0);
   }
   function frame(now){raf=0;if(last)time+=Math.min((now-last)/1000,.2);last=now;pointer.smoothX+=(pointer.x-pointer.smoothX)*.12;pointer.smoothY+=(pointer.y-pointer.smoothY)*.12;pointer.strength+=(pointer.active-pointer.strength)*.09;draw();if(!paused&&!reduced.matches&&!document.hidden&&!lost)raf=requestAnimationFrame(frame);}
-  function sync(){cancelAnimationFrame(raf);raf=0;last=0;toggle.textContent=paused?'▶':'Ⅱ';toggle.setAttribute('aria-label',paused?'Resume motion':'Pause motion');toggle.setAttribute('aria-pressed',String(paused));toggle.hidden=reduced.matches||lost;if(!paused&&!reduced.matches&&!document.hidden&&!lost)raf=requestAnimationFrame(frame);else draw();}
+  function sync(){cancelAnimationFrame(raf);raf=0;last=0;toggle.setAttribute('aria-label',paused?'Resume motion':'Pause motion');toggle.setAttribute('aria-pressed',String(paused));toggle.hidden=reduced.matches||lost;if(!paused&&!reduced.matches&&!document.hidden&&!lost)raf=requestAnimationFrame(frame);else draw();}
   toggle.addEventListener('click',()=>{paused=!paused;sync();});
   stage.addEventListener('pointermove',e=>{if(reduced.matches)return;const r=stage.getBoundingClientRect();pointer.x=((e.clientX-r.left)/width*2-1)*width/height;pointer.y=1-(e.clientY-r.top)/height*2;pointer.active=1;});
   for(const name of ['pointerleave','pointercancel','pointerup'])stage.addEventListener(name,()=>{pointer.active=0;});

@@ -3,5 +3,18 @@
 .hero{position:relative;min-height:100svh;overflow:hidden;background:#06090f}
 .particle-stage{position:absolute;top:6svh;left:0;width:100%;height:67svh}canvas{display:block;width:100%;height:100%;opacity:0}.webgl-ready canvas{opacity:1}
 .wordmark{position:absolute;top:76svh;left:0;width:100%;margin:0;text-align:center;font-family:Manrope,system-ui,sans-serif;font-size:clamp(24px,3vw,40px);font-weight:400;line-height:1.2;letter-spacing:-.04em;color:#d9e1e7}
-button{position:absolute;bottom:24px;right:28px;width:36px;height:36px;border:1px solid #293440;border-radius:50%;background:transparent;color:#9daebb;font:12px system-ui;cursor:pointer}button:hover{color:white;border-color:#88aaba}button:focus-visible{outline:2px solid #a3e9ff;outline-offset:5px}[hidden]{display:none!important}
-@media(max-width:600px){.particle-stage{top:10svh;height:59svh}.wordmark{top:74svh;font-size:28px}button{bottom:20px;right:20px}}
+button{cursor:pointer}button:focus-visible{outline:2px solid #a3e9ff;outline-offset:5px}[hidden]{display:none!important}
+@media(max-width:600px){.particle-stage{top:10svh;height:59svh}.wordmark{top:74svh;font-size:28px}}
+
+/* Phosphor Icons, regular weight (MIT). See ../icons/PHOSPHOR-LICENSE.txt. */
+.playback-controls{position:fixed;z-index:5;right:max(28px,env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #293440;border-radius:28px;background:rgba(6,9,15,.78);backdrop-filter:blur(12px)}
+.playback-controls button,.playback-controls #motion-toggle[hidden]{position:static;inset:auto;display:flex!important;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;margin:0;padding:0;border:0;border-radius:50%;background:transparent;color:#9daebb;line-height:1;appearance:none;touch-action:manipulation}
+.playback-controls button:hover{color:#f3f0e9;background:#ffffff0a}
+.playback-controls button:disabled{opacity:.4;cursor:wait}
+.playback-controls button[aria-pressed="true"]{background:#ddd2f01a;color:#e9dff8}
+.playback-controls svg{display:block;flex:none;width:20px;height:20px;fill:currentColor}
+#music-mute[aria-pressed="true"] .icon-sound,#music-mute[aria-pressed="false"] .icon-muted,
+#motion-toggle[aria-pressed="true"] .icon-pause,#motion-toggle[aria-pressed="false"] .icon-play{display:none}
+.control-divider{height:16px;width:1px;background:#293440;margin:0 3px}
+.music-status{position:absolute;right:8px;bottom:calc(100% + 10px);margin:0;white-space:nowrap;color:#9daebb;font-size:11px}
+@media(max-width:600px){.playback-controls{right:max(20px,env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom))}}
