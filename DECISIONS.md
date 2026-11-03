@@ -12,3 +12,5 @@ Ten Saussurea medusa studies on a dark background; lower-centered Manrope JellyR
 - Particle count reduced to 36,000 desktop / 24,000 mobile because continuous coverage no longer depends on point density. Pause, live reduced-motion handling, hidden-tab suspension and context restoration remain.
 
 Validation: both particle and surface GLSL programs compiled/linked with OpenGL ES; all ten target clouds and foreground masks, layer timing, loop boundary and reduced motion checked. Visual QA on a deployed preview before publication; no physical iPhone available.
+
+Final QA: native OpenGL ES rendered the surface at camera times 0, 3, 9, 39 and 83 with no interior coverage gaps or GL errors. Deployed preview checked at 390px width, on another botanical target at near-maximum yaw, and at transition midpoint. Temporary QA pages/scripts were removed before merge.
