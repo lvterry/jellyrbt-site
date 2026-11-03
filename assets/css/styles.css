@@ -1,7 +1,7 @@
 :root{color-scheme:dark;background:#06090f;color:#e2e8ed}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#06090f}body{font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 .hero{position:relative;min-height:100svh;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#0c1722 0,transparent 58%)}
-.particle-stage{position:absolute;top:6svh;left:0;width:100%;height:67svh}canvas{display:block;width:100%;height:100%;opacity:0}.webgl-ready canvas{opacity:1}.fallback{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:auto;width:min(87%,64svh);max-height:90%;object-fit:contain;mix-blend-mode:screen;opacity:1}.webgl-ready .fallback{display:none}
+.particle-stage{position:absolute;top:6svh;left:0;width:100%;height:67svh}canvas{display:block;width:100%;height:100%;opacity:0}.webgl-ready canvas{opacity:1}
 .wordmark{position:absolute;top:76svh;left:0;width:100%;margin:0;text-align:center;font-family:Manrope,system-ui,sans-serif;font-size:clamp(24px,3vw,40px);font-weight:400;line-height:1.2;letter-spacing:-.04em;color:#d9e1e7}
 button{position:absolute;bottom:24px;right:28px;width:36px;height:36px;border:1px solid #293440;border-radius:50%;background:transparent;color:#9daebb;font:12px system-ui;cursor:pointer}button:hover{color:white;border-color:#88aaba}button:focus-visible{outline:2px solid #a3e9ff;outline-offset:5px}[hidden]{display:none!important}
 @media(max-width:600px){.particle-stage{top:10svh;height:59svh}.wordmark{top:74svh;font-size:28px}button{bottom:20px;right:20px}}

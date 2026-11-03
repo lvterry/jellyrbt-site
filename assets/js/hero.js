@@ -5,7 +5,7 @@
   let canvas=document.getElementById('particles');
   const stage=canvas.parentElement, toggle=document.getElementById('motion-toggle');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-  const count=matchMedia('(max-width:600px)').matches?14000:26000;
+  const count=matchMedia('(max-width:600px)').matches?26000:46000;
   const TAU=Math.PI*2;
   let seed=71;
   const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
@@ -25,16 +25,19 @@
     }
     if(candidates.length<1000)throw new Error('Botanical image has insufficient foreground');
     candidates.sort((a,b)=>a.key-b.key);
-    const positions=new Float32Array(count*3),colors=new Float32Array(count*3);
+    const positions=new Float32Array(count*3),colors=new Float32Array(count*3),cssColors=new Array(count);
+    const enhance=(c,l)=>Math.min(1,Math.pow(Math.max(0,Math.min(1,l+(c-l)*1.55)),.72)*1.08);
     for(let i=0;i<count;i++){
       const p=candidates[Math.min(candidates.length-1,Math.floor((i+random())/count*candidates.length))],at=i*3;
       const x=(p.x+random()-.5)/size*2-1,y=1-(p.y+random()-.5)/size*2;
       positions[at]=x*1.25;positions[at+1]=y*1.25;
-      // Shallow photographic relief preserves the observed botanical anatomy.
-      positions[at+2]=(.5-Math.hypot(x*.7,y*.5))*.08+(random()-.5)*.012;
-      colors[at]=p.r/255;colors[at+1]=p.g/255;colors[at+2]=p.b/255;
+      // A gently domed depth field adds parallax without distorting the specimen.
+      const luminance=(p.r*.2126+p.g*.7152+p.b*.0722)/255;
+      positions[at+2]=Math.sqrt(Math.max(0,1-x*x/.9-y*y/1.5))*.3+luminance*.055+(random()-.5)*.012;
+      colors[at]=enhance(p.r/255,luminance);colors[at+1]=enhance(p.g/255,luminance);colors[at+2]=enhance(p.b/255,luminance);
+      cssColors[i]=`rgb(${Math.round(colors[at]*255)},${Math.round(colors[at+1]*255)},${Math.round(colors[at+2]*255)})`;
     }
-    return {positions,colors};
+    return {positions,colors,cssColors};
   }
   let shapes;
   try{shapes=(await Promise.all(images.map(load))).map(sample);}catch(error){console.warn(error);return;}
@@ -54,6 +57,11 @@
       p.z+=scatter*sin(aSeed*29.)*.25;
       p.x+=sin(uTime*.6+p.y*4.+aSeed*6.)*.0025*uMotion;
       p.y+=sin(uTime*.45)*.007*uMotion;
+      float yaw=sin(uTime*.52)*.14*uMotion;
+      float pitch=sin(uTime*.41+.4)*.045*uMotion;
+      float rx=p.x*cos(yaw)+p.z*sin(yaw);
+      float rz=-p.x*sin(yaw)+p.z*cos(yaw);
+      p=vec3(rx,p.y*cos(pitch)-rz*sin(pitch),p.y*sin(pitch)+rz*cos(pitch));
       float depth=3.6/(3.6-p.z);
       vec2 screen=p.xy*uScale*depth;
       vec2 delta=screen-uPointer;
@@ -61,16 +69,16 @@
       float force=pow(max(0.,1.-d/.27),2.)*.14*uPointerActive*uMotion;
       screen+=delta/max(d,.002)*force;
       gl_Position=vec4(screen.x/uAspect,screen.y,0.,1.);
-      gl_PointSize=clamp((1.7+aSeed*1.1)*uDpr*depth,1.,7.);
+      gl_PointSize=clamp((2.8+aSeed*.8)*uDpr*depth,1.,7.);
       vColor=mix(aColorFrom,aColorTo,m);
-      vAlpha=.78+aSeed*.22;
+      vAlpha=.94+aSeed*.06;
     }`;
   const fragment=`precision mediump float;
     varying vec3 vColor; varying float vAlpha;
     void main(){
       float r=length(gl_PointCoord-.5)*2.;if(r>1.)discard;
-      float light=exp(-r*r*3.3);
-      gl_FragColor=vec4(pow(vColor,vec3(.8))*1.07,light*vAlpha);
+      float light=exp(-r*r*1.5);
+      gl_FragColor=vec4(vColor,light*vAlpha);
     }`;
   let gl,ctx,program,buffers,uniforms,raf=0,last=0,time=0,paused=false,lost=false,current=-1;
   let width=1,height=1,dpr=1;
@@ -90,8 +98,8 @@
     gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);current=-1;lost=false;
   }
   function state(){
-    // Six-second hold lets each woolly specimen resolve; five-second transition.
-    const step=Math.floor(time/11)%10,t=Math.max(0,(time%11-6)/5);
+    // Five-second hold with continuous camera drift; four-second transition.
+    const step=Math.floor(time/9)%10,t=Math.max(0,(time%9-5)/4);
     return {step,next:(step+1)%10,t,m:t*t*(3-2*t)};
   }
   function resize(){const r=stage.getBoundingClientRect();width=r.width;height=r.height;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);if(gl&&!lost)gl.viewport(0,0,canvas.width,canvas.height);draw();}
@@ -108,19 +116,24 @@
     const {step,next,m}=state(),a=shapes[step],b=shapes[next];
     const scatter=Math.sin(m*Math.PI),scale=Math.min(.7,width/height*.75),motion=reduced.matches?0:1;
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
-    const brighten=c=>Math.min(255,Math.round(Math.pow(c,.8)*273));
+    const yaw=Math.sin(time*.52)*.14*motion,pitch=Math.sin(time*.41+.4)*.045*motion;
+    const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
     // Full sample count retains botanical detail in the compatibility renderer.
     for(let i=0;i<count;i++){
       const at=i*3,s=seeds[i];
       let x=a.positions[at]*(1-m)+b.positions[at]*m+scatter*Math.sin(s*43+time*.25)*.13;
       let y=a.positions[at+1]*(1-m)+b.positions[at+1]*m+scatter*Math.cos(s*37+time*.2)*.1;
-      const z=a.positions[at+2]*(1-m)+b.positions[at+2]*m+scatter*Math.sin(s*29)*.25;
+      let z=a.positions[at+2]*(1-m)+b.positions[at+2]*m+scatter*Math.sin(s*29)*.25;
       x+=Math.sin(time*.6+y*4+s*6)*.0025*motion;y+=Math.sin(time*.45)*.007*motion;
+      const rx=x*cy+z*sy,rz=-x*sy+z*cy;
+      z=y*sp+rz*cp;y=y*cp-rz*sp;x=rx;
       const depth=3.6/(3.6-z);x*=scale*depth;y*=scale*depth;
       const dx=x-pointer.smoothX,dy=y-pointer.smoothY,d=Math.hypot(dx,dy),f=Math.max(0,1-d/.27)**2*.14*pointer.strength*motion/Math.max(d,.002);x+=dx*f;y+=dy*f;
-      const r=brighten(a.colors[at]*(1-m)+b.colors[at]*m),g=brighten(a.colors[at+1]*(1-m)+b.colors[at+1]*m),bl=brighten(a.colors[at+2]*(1-m)+b.colors[at+2]*m);
-      ctx.fillStyle=`rgba(${r},${g},${bl},${.8+s*.2})`;
-      const px=width/2+x*height/2,py=height/2-y*height/2,size=(1.2+s*.8)*depth;
+      if(m===0){ctx.fillStyle=a.cssColors[i];}else{
+        const r=Math.round((a.colors[at]*(1-m)+b.colors[at]*m)*255),g=Math.round((a.colors[at+1]*(1-m)+b.colors[at+1]*m)*255),bl=Math.round((a.colors[at+2]*(1-m)+b.colors[at+2]*m)*255);
+        ctx.fillStyle=`rgb(${r},${g},${bl})`;
+      }
+      const px=width/2+x*height/2,py=height/2-y*height/2,size=(1.8+s*.6)*depth;
       ctx.fillRect(px-size/2,py-size/2,size,size);
     }
   }
