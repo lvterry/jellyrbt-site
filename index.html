@@ -15,6 +15,16 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=wave-c-1">
   <link rel="icon" type="image/svg+xml" sizes="any" href="assets/favicon.svg?v=wave-c-1">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=wave-c-1">
+  <style>
+    .music-controls{position:fixed;z-index:5;left:max(28px,env(safe-area-inset-left));bottom:calc(24px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #293440;border-radius:28px;background:rgba(6,9,15,.78);backdrop-filter:blur(12px)}
+    .music-controls button{position:static;width:44px;height:44px;border:0;border-radius:50%;font:500 13px Manrope,system-ui,sans-serif;color:#9daebb;display:grid;place-items:center;touch-action:manipulation}
+    .music-controls button:hover{color:#f3f0e9;background:#ffffff0a}
+    .music-controls button[aria-pressed="true"]{background:#ddd2f01a;color:#e9dff8}
+    .music-controls svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .music-controls .music-divider{height:16px;width:1px;background:#293440;margin:0 3px}
+    .music-status{position:absolute;left:8px;bottom:calc(100% + 10px);margin:0;white-space:nowrap;color:#9daebb;font-size:11px}
+    @media(max-width:600px){.music-controls{left:max(20px,env(safe-area-inset-left));bottom:calc(20px + env(safe-area-inset-bottom))}}
+  </style>
 </head>
 <body>
   <main class="hero">
@@ -23,7 +33,92 @@
     </div>
     <h1 class="wordmark">JellyRabbit</h1>
     <button id="motion-toggle" type="button" aria-label="Pause motion" aria-pressed="false" hidden>Ⅱ</button>
+    <div class="music-controls" role="group" aria-label="Soundtrack comparison">
+      <button id="music-play" type="button" aria-label="Play music" aria-pressed="false" title="Play / pause music">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4Z"/><path id="music-waves" d="m16 9 6 6m0-6-6 6"/></svg>
+      </button>
+      <span class="music-divider" aria-hidden="true"></span>
+      <button type="button" data-track="1" aria-label="Track 1: Floating in Zero Gravity" aria-pressed="true" title="Floating in Zero Gravity — MeditativeTiger">1</button>
+      <button type="button" data-track="3" aria-label="Track 3: Floating into Space" aria-pressed="false" title="Floating into Space — Giu1978">3</button>
+      <p id="music-status" class="music-status" role="status" aria-live="polite"></p>
+    </div>
+    <audio id="soundtrack" preload="none" loop></audio>
   </main>
   <script src="assets/js/hero.js?v=medusa-surface-1" defer></script>
+  <script>
+(() => {
+  'use strict';
+  // Pixabay Content License. Source / artist:
+  // 1: pixabay.com/music/meditationspiritual-floating-in-zero-gravity-363225/ — MeditativeTiger
+  // 3: pixabay.com/music/solo-piano-floating-into-space-189706/ — Giu1978
+  const tracks = {
+    '1': 'https://cdn.pixabay.com/audio/2025/06/21/audio_742bf5e258.mp3',
+    '3': 'https://cdn.pixabay.com/audio/2024/02/05/audio_ebb3fa7634.mp3'
+  };
+  const audio = document.getElementById('soundtrack');
+  const play = document.getElementById('music-play');
+  const waves = document.getElementById('music-waves');
+  const status = document.getElementById('music-status');
+  const buttons = [...document.querySelectorAll('[data-track]')];
+  let selected = '1';
+  let loaded = null;
+  let request = 0;
+  let wanted = false;
+  audio.volume = 0.45;
+  const update = () => {
+    const playing = wanted && !audio.paused;
+    play.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+    play.setAttribute('aria-pressed', String(playing));
+    waves.setAttribute('d', playing ? 'M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14' : 'm16 9 6 6m0-6-6 6');
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.track === selected)));
+  };
+  const start = async () => {
+    const token = ++request;
+    wanted = true;
+    if (loaded !== selected) {
+      audio.pause();
+      audio.src = tracks[selected];
+      loaded = selected;
+      audio.load();
+    }
+    status.textContent = 'Loading…';
+    update();
+    try {
+      await audio.play();
+      if (token !== request) return;
+      status.textContent = '';
+      update();
+    } catch (error) {
+      if (token !== request) return;
+      wanted = false;
+      status.textContent = 'Unable to play. Tap to retry.';
+      update();
+    }
+  };
+  buttons.forEach(button => button.addEventListener('click', () => {
+    selected = button.dataset.track;
+    start();
+  }));
+  play.addEventListener('click', () => {
+    if (wanted) {
+      ++request;
+      wanted = false;
+      audio.pause();
+      status.textContent = '';
+      update();
+    } else start();
+  });
+  audio.addEventListener('playing', () => { if (wanted) status.textContent = ''; update(); });
+  audio.addEventListener('waiting', () => { if (wanted) status.textContent = 'Loading…'; });
+  audio.addEventListener('pause', update);
+  audio.addEventListener('error', () => {
+    if (!wanted) return;
+    ++request;
+    wanted = false;
+    status.textContent = 'Unable to load. Tap to retry.';
+    update();
+  });
+})();
+  </script>
 </body>
 </html>
