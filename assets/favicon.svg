@@ -1,4 +1,1 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="64" height="64" fill="white"/>
-<path d="M31.2708 33.2041C46.6965 32.1168 59.5005 35.4782 59.8695 40.7119C60.2383 45.9456 48.0324 51.0699 32.6068 52.1573C17.1811 53.2447 4.37706 49.8831 4.00812 44.6494C3.63975 39.4159 15.8455 34.2916 31.2708 33.2041ZM20.1654 16.4766C28.8398 11.4509 37.6912 10.5162 39.9349 14.3887C42.1782 18.2614 36.9646 25.4753 28.2904 30.501C19.6161 35.5267 10.7656 36.4612 8.5218 32.5889C6.27811 28.7164 11.4909 21.5025 20.1654 16.4766Z" fill="#030213" fill-opacity="0.9"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><title>JellyRabbit</title><rect width="32" height="32" rx="6" fill="#06090f"/><style>.wave{fill:none;stroke-width:2.8;stroke-linecap:round}@media(max-width:20px){.wave{stroke-width:3.2}}</style><ellipse class="wave" cx="16" cy="16" rx="8.8" ry="12.6" transform="rotate(-42 16 16)" stroke="#f0e7d6"/><ellipse class="wave" cx="16" cy="16" rx="8.8" ry="12.6" transform="rotate(42 16 16)" stroke="#ae91d5"/></svg>
