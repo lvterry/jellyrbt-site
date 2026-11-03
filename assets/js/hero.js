@@ -36,7 +36,7 @@
     const positions=new Float32Array(count*3),colors=new Float32Array(count*3),cssColors=new Array(count);
     const enhance=(c,l)=>{
       const colored=Math.max(0,l+(c-l)*1.32);
-      const exposure=Math.max(.32,Math.pow(l,.8))/Math.max(l,.01);
+      const exposure=Math.max(.58,Math.pow(l,.8))/Math.max(l,.01);
       return Math.min(.96,colored*exposure);
     };
     for(let i=0;i<count;i++){
@@ -46,7 +46,7 @@
       positions[at]=x*1.25;positions[at+1]=y*1.25;
       // A gently domed depth field adds parallax without distorting the specimen.
       const luminance=(p.r*.2126+p.g*.7152+p.b*.0722)/255;
-      positions[at+2]=Math.sqrt(Math.max(0,1-x*x/.9-y*y/1.5))*.3+luminance*.055+(random()-.5)*.012;
+      positions[at+2]=Math.sqrt(Math.max(0,1-x*x/.9-y*y/1.5))*.3+luminance*.055+(random()-.5)*.002;
       colors[at]=enhance(p.r/255,luminance);colors[at+1]=enhance(p.g/255,luminance);colors[at+2]=enhance(p.b/255,luminance);
       cssColors[i]=`rgb(${Math.round(colors[at]*255)},${Math.round(colors[at+1]*255)},${Math.round(colors[at+2]*255)})`;
     }
@@ -68,7 +68,7 @@
       p.x+=scatter*sin(aSeed*43.+uTime*.25)*.13;
       p.y+=scatter*cos(aSeed*37.+uTime*.2)*.1;
       p.z+=scatter*sin(aSeed*29.)*.25;
-      p.x+=sin(uTime*.6+p.y*4.+aSeed*6.)*.0025*uMotion;
+      p.x+=sin(uTime*.6+p.y*4.)*.0015*uMotion;
       p.y+=sin(uTime*.45)*.007*uMotion;
       float yaw=sin(uTime*.52)*.14*uMotion;
       float pitch=sin(uTime*.41+.4)*.045*uMotion;
@@ -82,15 +82,15 @@
       float force=pow(max(0.,1.-d/.27),2.)*.14*uPointerActive*uMotion;
       screen+=delta/max(d,.002)*force;
       gl_Position=vec4(screen.x/uAspect,screen.y,0.,1.);
-      gl_PointSize=clamp((1.45+aSeed*.25)*uDpr*depth,1.,7.);
+      gl_PointSize=clamp((1.9+aSeed*.15)*uDpr*depth,1.,7.);
       vColor=mix(aColorFrom,aColorTo,m);
-      vAlpha=.66;
+      vAlpha=.54;
     }`;
   const fragment=`precision mediump float;
     varying vec3 vColor; varying float vAlpha;
     void main(){
       float r=length(gl_PointCoord-.5)*2.;if(r>1.)discard;
-      float alpha=(1.-smoothstep(.68,1.,r))*vAlpha;
+      float alpha=(1.-smoothstep(.88,1.,r))*vAlpha;
       // Premultiplied screen blending can add light, never paint dark dots
       // over already bright fibers or leaves.
       gl_FragColor=vec4(vColor*alpha,alpha);
@@ -130,7 +130,7 @@
   function drawCanvas(){
     const {step,next,m}=state(),a=shapes[step],b=shapes[next];
     const scatter=Math.sin(m*Math.PI),scale=Math.min(.7,width/height*.75),motion=reduced.matches?0:1;
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.fillStyle='#06090f';ctx.fillRect(0,0,width,height);ctx.globalCompositeOperation='screen';ctx.globalAlpha=.66;
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.fillStyle='#06090f';ctx.fillRect(0,0,width,height);ctx.globalCompositeOperation='screen';ctx.globalAlpha=.54;
     const yaw=Math.sin(time*.52)*.14*motion,pitch=Math.sin(time*.41+.4)*.045*motion;
     const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
     // Full sample count retains botanical detail in the compatibility renderer.
@@ -139,7 +139,7 @@
       let x=a.positions[at]*(1-m)+b.positions[at]*m+scatter*Math.sin(s*43+time*.25)*.13;
       let y=a.positions[at+1]*(1-m)+b.positions[at+1]*m+scatter*Math.cos(s*37+time*.2)*.1;
       let z=a.positions[at+2]*(1-m)+b.positions[at+2]*m+scatter*Math.sin(s*29)*.25;
-      x+=Math.sin(time*.6+y*4+s*6)*.0025*motion;y+=Math.sin(time*.45)*.007*motion;
+      x+=Math.sin(time*.6+y*4)*.0015*motion;y+=Math.sin(time*.45)*.007*motion;
       const rx=x*cy+z*sy,rz=-x*sy+z*cy;
       z=y*sp+rz*cp;y=y*cp-rz*sp;x=rx;
       const depth=3.6/(3.6-z);x*=scale*depth;y*=scale*depth;
@@ -148,7 +148,7 @@
         const r=Math.round((a.colors[at]*(1-m)+b.colors[at]*m)*255),g=Math.round((a.colors[at+1]*(1-m)+b.colors[at+1]*m)*255),bl=Math.round((a.colors[at+2]*(1-m)+b.colors[at+2]*m)*255);
         ctx.fillStyle=`rgb(${r},${g},${bl})`;
       }
-      const px=width/2+x*height/2,py=height/2-y*height/2,size=(1.25+s*.18)*depth;
+      const px=width/2+x*height/2,py=height/2-y*height/2,size=(1.85+s*.1)*depth;
       ctx.fillRect(px-size/2,py-size/2,size,size);
     }
   }
