@@ -57,7 +57,7 @@
   const vertex=`precision highp float;
     attribute vec3 aFrom,aTo,aColorFrom,aColorTo;
     attribute float aSeed;
-    uniform float uMorph,uTime,uAspect,uScale,uDpr,uPointerActive,uMotion;
+    uniform float uMorph,uTime,uAspect,uScale,uDpr,uPointerActive,uMotion,uOpacity;
     uniform vec2 uPointer;
     varying vec3 vColor;
     varying float vAlpha;
@@ -84,7 +84,7 @@
       gl_Position=vec4(screen.x/uAspect,screen.y,0.,1.);
       gl_PointSize=clamp((1.9+aSeed*.15)*uDpr*depth,1.,7.);
       vColor=mix(aColorFrom,aColorTo,m);
-      vAlpha=.54;
+      vAlpha=uOpacity;
     }`;
   const fragment=`precision mediump float;
     varying vec3 vColor; varying float vAlpha;
@@ -109,7 +109,7 @@
       const b=gl.createBuffer(),at=gl.getAttribLocation(program,name);gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.enableVertexAttribArray(at);gl.vertexAttribPointer(at,name==='aSeed'?1:3,gl.FLOAT,false,0,0);buffers[name]=b;
     }
     gl.bufferData(gl.ARRAY_BUFFER,seeds,gl.STATIC_DRAW);uniforms={};
-    for(const name of ['uMorph','uTime','uAspect','uScale','uDpr','uPointerActive','uMotion','uPointer'])uniforms[name]=gl.getUniformLocation(program,name);
+    for(const name of ['uMorph','uTime','uAspect','uScale','uDpr','uPointerActive','uMotion','uOpacity','uPointer'])uniforms[name]=gl.getUniformLocation(program,name);
     gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_COLOR);gl.clearColor(6/255,9/255,15/255,1);current=-1;lost=false;
   }
   function state(){
@@ -125,12 +125,12 @@
     if(current!==step){
       for(const [name,data] of [['aFrom',shapes[step].positions],['aTo',shapes[next].positions],['aColorFrom',shapes[step].colors],['aColorTo',shapes[next].colors]]){gl.bindBuffer(gl.ARRAY_BUFFER,buffers[name]);gl.bufferData(gl.ARRAY_BUFFER,data,gl.STATIC_DRAW);}current=step;
     }
-    gl.uniform1f(uniforms.uMorph,t);gl.uniform1f(uniforms.uTime,time);gl.uniform1f(uniforms.uAspect,width/height);gl.uniform1f(uniforms.uScale,Math.min(.7,width/height*.75));gl.uniform1f(uniforms.uDpr,dpr);gl.uniform1f(uniforms.uMotion,reduced.matches?0:1);gl.uniform2f(uniforms.uPointer,pointer.smoothX,pointer.smoothY);gl.uniform1f(uniforms.uPointerActive,pointer.strength);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.POINTS,0,count);
+    gl.uniform1f(uniforms.uOpacity,count===72000?.29:.36);gl.uniform1f(uniforms.uMorph,t);gl.uniform1f(uniforms.uTime,time);gl.uniform1f(uniforms.uAspect,width/height);gl.uniform1f(uniforms.uScale,Math.min(.7,width/height*.75));gl.uniform1f(uniforms.uDpr,dpr);gl.uniform1f(uniforms.uMotion,reduced.matches?0:1);gl.uniform2f(uniforms.uPointer,pointer.smoothX,pointer.smoothY);gl.uniform1f(uniforms.uPointerActive,pointer.strength);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.POINTS,0,count);
   }
   function drawCanvas(){
     const {step,next,m}=state(),a=shapes[step],b=shapes[next];
     const scatter=Math.sin(m*Math.PI),scale=Math.min(.7,width/height*.75),motion=reduced.matches?0:1;
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.fillStyle='#06090f';ctx.fillRect(0,0,width,height);ctx.globalCompositeOperation='screen';ctx.globalAlpha=.54;
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.fillStyle='#06090f';ctx.fillRect(0,0,width,height);ctx.globalCompositeOperation='screen';ctx.globalAlpha=count===72000?.29:.36;
     const yaw=Math.sin(time*.52)*.14*motion,pitch=Math.sin(time*.41+.4)*.045*motion;
     const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
     // Full sample count retains botanical detail in the compatibility renderer.
