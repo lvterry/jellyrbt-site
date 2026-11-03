@@ -5,31 +5,44 @@
   let canvas=document.getElementById('particles');
   const stage=canvas.parentElement, toggle=document.getElementById('motion-toggle');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-  const count=matchMedia('(max-width:600px)').matches?26000:46000;
+  const count=matchMedia('(max-width:600px)').matches?72000:100000;
   const TAU=Math.PI*2;
   let seed=71;
   const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
   const seeds=Float32Array.from({length:count},random);
   const images=Array.from({length:10},(_,i)=>`assets/plants/medusa-${String(i+1).padStart(2,'0')}.webp`);
   function load(src){return new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(new Error(`Unable to load ${src}`));image.src=src;});}
-  function morton(x,y){let n=0;for(let b=0;b<9;b++){n|=((x>>b)&1)<<(2*b);n|=((y>>b)&1)<<(2*b+1);}return n;}
+  function morton(x,y){let n=0;for(let b=0;b<10;b++){n|=((x>>b)&1)<<(2*b);n|=((y>>b)&1)<<(2*b+1);}return n;}
   function sample(image){
-    const size=448,off=document.createElement('canvas');off.width=off.height=size;
+    const size=640,off=document.createElement('canvas');off.width=off.height=size;
     const ctx=off.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0,size,size);
     const pixels=ctx.getImageData(0,0,size,size).data,candidates=[];
     for(let y=0;y<size;y++)for(let x=0;x<size;x++){
       const at=(y*size+x)*4,r=pixels[at],g=pixels[at+1],b=pixels[at+2];
-      const light=Math.max(r,g,b);
-      // Exclude only black backdrop; retain shadowed foliage and fine wool.
-      if(light>24&&pixels[at+3]>127)candidates.push({x,y,r,g,b,key:morton(x,y)});
+      // A tiny, edge-aware neighborhood reconstruction closes isolated dark
+      // pinholes in the photographic source before point placement.
+      let sr=0,sg=0,sb=0,weight=0;
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+        const nx=Math.max(0,Math.min(size-1,x+dx)),ny=Math.max(0,Math.min(size-1,y+dy));
+        const q=(ny*size+nx)*4,w=(dx===0?2:1)*(dy===0?2:1);
+        sr+=pixels[q]*w;sg+=pixels[q+1]*w;sb+=pixels[q+2]*w;weight+=w;
+      }
+      sr/=weight;sg/=weight;sb/=weight;
+      const light=Math.max(sr,sg,sb),luminance=sr*.2126+sg*.7152+sb*.0722;
+      if(light>44&&luminance>26&&pixels[at+3]>127)candidates.push({x,y,r:sr,g:sg,b:sb,key:morton(x,y)});
     }
     if(candidates.length<1000)throw new Error('Botanical image has insufficient foreground');
     candidates.sort((a,b)=>a.key-b.key);
     const positions=new Float32Array(count*3),colors=new Float32Array(count*3),cssColors=new Array(count);
-    const enhance=(c,l)=>Math.min(1,Math.pow(Math.max(0,Math.min(1,l+(c-l)*1.55)),.72)*1.08);
+    const enhance=(c,l)=>{
+      const colored=Math.max(0,l+(c-l)*1.32);
+      const exposure=Math.max(.32,Math.pow(l,.8))/Math.max(l,.01);
+      return Math.min(.96,colored*exposure);
+    };
     for(let i=0;i<count;i++){
-      const p=candidates[Math.min(candidates.length-1,Math.floor((i+random())/count*candidates.length))],at=i*3;
-      const x=(p.x+random()-.5)/size*2-1,y=1-(p.y+random()-.5)/size*2;
+      const p=candidates[Math.min(candidates.length-1,Math.floor((i+.5)/count*candidates.length))],at=i*3;
+      // Deterministic, even placement replaces independent random dots.
+      const x=(p.x+.5)/size*2-1,y=1-(p.y+.5)/size*2;
       positions[at]=x*1.25;positions[at+1]=y*1.25;
       // A gently domed depth field adds parallax without distorting the specimen.
       const luminance=(p.r*.2126+p.g*.7152+p.b*.0722)/255;
@@ -69,23 +82,25 @@
       float force=pow(max(0.,1.-d/.27),2.)*.14*uPointerActive*uMotion;
       screen+=delta/max(d,.002)*force;
       gl_Position=vec4(screen.x/uAspect,screen.y,0.,1.);
-      gl_PointSize=clamp((2.8+aSeed*.8)*uDpr*depth,1.,7.);
+      gl_PointSize=clamp((1.45+aSeed*.25)*uDpr*depth,1.,7.);
       vColor=mix(aColorFrom,aColorTo,m);
-      vAlpha=.94+aSeed*.06;
+      vAlpha=.66;
     }`;
   const fragment=`precision mediump float;
     varying vec3 vColor; varying float vAlpha;
     void main(){
       float r=length(gl_PointCoord-.5)*2.;if(r>1.)discard;
-      float light=exp(-r*r*1.5);
-      gl_FragColor=vec4(vColor,light*vAlpha);
+      float alpha=(1.-smoothstep(.68,1.,r))*vAlpha;
+      // Premultiplied screen blending can add light, never paint dark dots
+      // over already bright fibers or leaves.
+      gl_FragColor=vec4(vColor*alpha,alpha);
     }`;
   let gl,ctx,program,buffers,uniforms,raf=0,last=0,time=0,paused=false,lost=false,current=-1;
   let width=1,height=1,dpr=1;
   const pointer={x:0,y:0,active:0,smoothX:0,smoothY:0,strength:0};
   function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
   function setup(){
-    gl=canvas.getContext('webgl',{alpha:true,antialias:false,depth:false,powerPreference:'low-power'});
+    gl=canvas.getContext('webgl',{alpha:false,antialias:false,depth:false,premultipliedAlpha:false,powerPreference:'low-power'});
     if(!gl)throw new Error('WebGL unavailable');
     program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,vertex));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,fragment));gl.linkProgram(program);
     if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(program));
@@ -95,14 +110,14 @@
     }
     gl.bufferData(gl.ARRAY_BUFFER,seeds,gl.STATIC_DRAW);uniforms={};
     for(const name of ['uMorph','uTime','uAspect','uScale','uDpr','uPointerActive','uMotion','uPointer'])uniforms[name]=gl.getUniformLocation(program,name);
-    gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);current=-1;lost=false;
+    gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_COLOR);gl.clearColor(6/255,9/255,15/255,1);current=-1;lost=false;
   }
   function state(){
     // Five-second hold with continuous camera drift; four-second transition.
     const step=Math.floor(time/9)%10,t=Math.max(0,(time%9-5)/4);
     return {step,next:(step+1)%10,t,m:t*t*(3-2*t)};
   }
-  function resize(){const r=stage.getBoundingClientRect();width=r.width;height=r.height;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);if(gl&&!lost)gl.viewport(0,0,canvas.width,canvas.height);draw();}
+  function resize(){const r=stage.getBoundingClientRect();width=r.width;height=r.height;dpr=Math.min(devicePixelRatio||1,3,Math.sqrt(3500000/(width*height)));canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);if(gl&&!lost)gl.viewport(0,0,canvas.width,canvas.height);draw();}
   function draw(){
     if(lost)return;
     if(ctx){drawCanvas();return;}
@@ -115,7 +130,7 @@
   function drawCanvas(){
     const {step,next,m}=state(),a=shapes[step],b=shapes[next];
     const scatter=Math.sin(m*Math.PI),scale=Math.min(.7,width/height*.75),motion=reduced.matches?0:1;
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.globalCompositeOperation='source-over';ctx.globalAlpha=1;ctx.fillStyle='#06090f';ctx.fillRect(0,0,width,height);ctx.globalCompositeOperation='screen';ctx.globalAlpha=.66;
     const yaw=Math.sin(time*.52)*.14*motion,pitch=Math.sin(time*.41+.4)*.045*motion;
     const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
     // Full sample count retains botanical detail in the compatibility renderer.
@@ -133,7 +148,7 @@
         const r=Math.round((a.colors[at]*(1-m)+b.colors[at]*m)*255),g=Math.round((a.colors[at+1]*(1-m)+b.colors[at+1]*m)*255),bl=Math.round((a.colors[at+2]*(1-m)+b.colors[at+2]*m)*255);
         ctx.fillStyle=`rgb(${r},${g},${bl})`;
       }
-      const px=width/2+x*height/2,py=height/2-y*height/2,size=(1.8+s*.6)*depth;
+      const px=width/2+x*height/2,py=height/2-y*height/2,size=(1.25+s*.18)*depth;
       ctx.fillRect(px-size/2,py-size/2,size,size);
     }
   }
