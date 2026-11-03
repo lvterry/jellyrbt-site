@@ -1,15 +1,15 @@
 # Homepage: Saussurea medusa
 
-Dark scene, lower-centered Manrope JellyRabbit wordmark, ten generated botanical studies, 5-second hold and 4-second morph (90-second loop), gentle yaw/pitch, pointer repulsion and reduced-motion support.
+Dark background, lower-centered Manrope JellyRabbit wordmark, ten botanical studies, 5-second hold / 4-second morph (90-second loop), gentle camera yaw/pitch, pointer repulsion and reduced-motion support.
 
 ## Clear particle reconstruction
 
-- Source images remain off-screen inputs only. No raw photo or fallback image is mounted in the page.
-- 640px source sampling with a small 3×3 reconstruction filter repairs isolated source pinholes before generating candidates. Deterministic spatial sampling replaces independent random placement.
-- 100,000 desktop / 72,000 mobile points; smaller sharp particle cores replace the previous large soft sprites.
-- Lifted shadow luminance and restrained saturation retain the ivory wool, purple florets and sage leaves.
-- Both renderers use screen compositing. Foreground samples only add light and cannot stamp dark marks over neighboring fibers.
-- WebGL uses an opaque dark framebuffer, explicit premultiplied screen contributions and a narrow anti-aliased edge. Canvas follows the same color, position and compositing rules.
-- Native device pixel density up to 3×, bounded by a 3.5-million-pixel framebuffer budget.
+- Source images are off-screen sampling inputs; no image is displayed in the page.
+- Uniform 640px spatial sampling replaces independently jittered dots. A tiny 3×3 weighted neighborhood filter reconstructs isolated source pinholes.
+- 100,000 desktop / 72,000 mobile points, coherent motion at rest and opaque narrow-edge cores provide continuous coverage without the previous random black gaps.
+- Shadow exposure has a controlled floor; saturation remains restrained. Dark photographic speckles are not reproduced as near-black particles.
+- Both renderers use normalized source colors and source-over compositing rather than density-dependent additive exposure, retaining wool detail and flower/leaf hues.
+- WebGL uses an opaque dark framebuffer and tightly anti-aliased particle edges. The Canvas fallback renders into an off-screen back buffer and presents only complete frames, preventing partial-row artifacts.
+- Native device pixel density up to 3×, within a 3.5-million-pixel framebuffer budget. CSS/JS cache version: medusa-3e.
 
-Validation: syntax; all ten finite point clouds and hue coverage; 90-second wrap and transition boundaries; responsive sample counts; pause/reduced motion; mathematical monotonicity of screen blending; OpenGL ES shader compile/link. Visual review on the deployed preview precedes merge. Physical iPhone verification remains outside the available test environment.
+Validation: syntax; all ten point clouds, color coverage, 90-second wrap, transition boundaries, mobile sample count and 3× DPR, pause/reduced motion; OpenGL ES shader compile/link. Deployed preview visually checked at desktop and 390px iframe widths. Temporary QA page removed before publication. No physical iPhone was available for testing.

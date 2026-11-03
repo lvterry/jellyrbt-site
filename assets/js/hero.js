@@ -36,7 +36,7 @@
     const positions=new Float32Array(count*3),colors=new Float32Array(count*3),cssColors=new Array(count);
     const enhance=(c,l)=>{
       const colored=Math.max(0,l+(c-l)*1.32);
-      const exposure=Math.max(.58,Math.pow(l,.8))/Math.max(l,.01);
+      const exposure=Math.max(.4,Math.pow(l,.8))/Math.max(l,.01);
       return Math.min(.96,colored*exposure);
     };
     for(let i=0;i<count;i++){
