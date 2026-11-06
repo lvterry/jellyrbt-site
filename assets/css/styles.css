@@ -6,8 +6,51 @@
 button{cursor:pointer}button:focus-visible{outline:2px solid #a3e9ff;outline-offset:5px}[hidden]{display:none!important}
 @media(max-width:600px){.particle-stage{top:10svh;height:59svh}.wordmark{top:74svh;font-size:28px}}
 
+.spotlights {
+  --beam-radius: clamp(64px, 15vmin, 144px);
+  --sweep-radius: clamp(80px, 18vmin, 176px);
+  --offscreen: -100vmax -100vmax;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.spotlights::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle var(--sweep-radius) at var(--sweep-position, var(--offscreen)),
+    #a9ceff24, #a9ceff0c 48%, transparent 100%
+  );
+}
+.corner-lettering {
+  --corner-inset: clamp(10px, 2.6vmin, 28px);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  place-content: space-between;
+  padding:
+    max(var(--corner-inset), env(safe-area-inset-top))
+    max(var(--corner-inset), env(safe-area-inset-right))
+    max(var(--corner-inset), env(safe-area-inset-bottom))
+    max(var(--corner-inset), env(safe-area-inset-left));
+  color: #d9e9ff;
+  font: 900 clamp(48px, min(22vw, 34svh), 280px)/1 "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  mask-image:
+    radial-gradient(
+      circle var(--beam-radius) at var(--beam-position, var(--offscreen)),
+      #000 12%, #000c 38%, transparent 100%
+    ),
+    radial-gradient(
+      circle var(--sweep-radius) at var(--sweep-position, var(--offscreen)),
+      #000e 12%, #0009 40%, transparent 100%
+    );
+}
+
 /* Phosphor Icons, regular weight (MIT). See ../icons/PHOSPHOR-LICENSE.txt. */
-.playback-controls{position:fixed;z-index:5;right:max(28px,env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #293440;border-radius:28px;background:rgba(6,9,15,.78);backdrop-filter:blur(12px)}
+.playback-controls{position:fixed;z-index:5;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:3px;padding:4px;border:1px solid #293440;border-radius:28px;background:rgba(6,9,15,.78);backdrop-filter:blur(12px)}
 .playback-controls button,.playback-controls #motion-toggle[hidden]{position:static;inset:auto;display:flex!important;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;margin:0;padding:0;border:0;border-radius:50%;background:transparent;color:#9daebb;line-height:1;appearance:none;touch-action:manipulation}
 .playback-controls button:hover{color:#f3f0e9;background:#ffffff0a}
 .playback-controls button:disabled{opacity:.4;cursor:wait}
@@ -17,4 +60,8 @@ button{cursor:pointer}button:focus-visible{outline:2px solid #a3e9ff;outline-off
 #motion-toggle[aria-pressed="true"] .icon-pause,#motion-toggle[aria-pressed="false"] .icon-play{display:none}
 .control-divider{height:16px;width:1px;background:#293440;margin:0 3px}
 .music-status{position:absolute;right:8px;bottom:calc(100% + 10px);margin:0;white-space:nowrap;color:#9daebb;font-size:11px}
-@media(max-width:600px){.playback-controls{right:max(20px,env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom))}}
+@media(max-width:600px){.playback-controls{bottom:calc(20px + env(safe-area-inset-bottom))}}
+@media(max-height:480px){
+  .wordmark{top:min(74svh,calc(100svh - 128px - env(safe-area-inset-bottom)))}
+  .playback-controls{bottom:calc(14px + env(safe-area-inset-bottom))}
+}

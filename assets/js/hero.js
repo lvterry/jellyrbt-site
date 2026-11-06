@@ -5,6 +5,76 @@
   let canvas=document.getElementById('particles');
   const stage=canvas.parentElement, toggle=document.getElementById('motion-toggle');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+
+  const spotlights = document.querySelector('.spotlights');
+  const lettering = document.querySelector('.corner-lettering');
+  const hideBeam = () => lettering.style.removeProperty('--beam-position');
+  document.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'touch') {
+      hideBeam();
+      return;
+    }
+    lettering.style.setProperty('--beam-position', `${event.clientX}px ${event.clientY}px`);
+  });
+  document.documentElement.addEventListener('pointerleave', hideBeam);
+  window.addEventListener('blur', hideBeam);
+
+  let sweepTimer = 0;
+  let sweepFrame = 0;
+  const clearSweep = () => spotlights.style.removeProperty('--sweep-position');
+  const scheduleSweep = () => {
+    sweepTimer = setTimeout(startSweep, 8500 + Math.random() * 3000);
+  };
+  function startSweep() {
+    scheduleSweep();
+    const width = spotlights.clientWidth;
+    const height = spotlights.clientHeight;
+    let targetX = width * (0.35 + Math.random() * 0.3);
+    let targetY = height * (0.35 + Math.random() * 0.3);
+    if (Math.random() < 0.3) {
+      const letter = lettering.children[Math.floor(Math.random() * lettering.children.length)];
+      const box = letter.getBoundingClientRect();
+      targetX = box.left + box.width / 2;
+      targetY = box.top + box.height / 2;
+    }
+    const horizontal = Math.random() < 0.65;
+    const extent = horizontal ? width : height;
+    const slope = (Math.random() - 0.5) * 0.55;
+    const reverse = Math.random() < 0.5;
+    const duration = 1400 + Math.random() * 600;
+    const overscan = 180;
+    let start;
+    function sweep(now) {
+      start ??= now;
+      const progress = (now - start) / duration;
+      if (progress >= 1) {
+        sweepFrame = 0;
+        clearSweep();
+        return;
+      }
+      const distance = (extent + 2 * overscan) * (reverse ? 1 - progress : progress) - overscan;
+      const x = horizontal ? distance : targetX + (distance - targetY) * slope;
+      const y = horizontal ? targetY + (distance - targetX) * slope : distance;
+      spotlights.style.setProperty('--sweep-position', `${x}px ${y}px`);
+      sweepFrame = requestAnimationFrame(sweep);
+    }
+    sweepFrame = requestAnimationFrame(sweep);
+  }
+  function syncSweep() {
+    if (reduced.matches || document.hidden || toggle.getAttribute('aria-pressed') === 'true') {
+      clearTimeout(sweepTimer);
+      cancelAnimationFrame(sweepFrame);
+      sweepTimer = sweepFrame = 0;
+      clearSweep();
+    } else if (!sweepTimer) {
+      scheduleSweep();
+    }
+  }
+  new MutationObserver(syncSweep).observe(toggle, { attributeFilter: ['aria-pressed'] });
+  document.addEventListener('visibilitychange', syncSweep);
+  reduced.addEventListener('change', syncSweep);
+  syncSweep();
+
   const count=matchMedia('(max-width:600px)').matches?24000:36000;
   const TAU=Math.PI*2;
   let seed=71;
