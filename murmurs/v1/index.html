@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#06090f">
+  <title>Murmuration Explorer · JellyRabbit</title>
+  <meta name="description" content="Twenty live starling-murmuration simulations — boids, Vicsek and topological flocking — with tunable parameters and saveable presets.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/murmurs/murmurs.css?v=1">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="/favicon.ico?v=wave-c-1">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg?v=wave-c-1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=wave-c-1">
+  <script type="module" src="/murmurs/src/ui/app.js?v=1"></script>
+</head>
+<body data-mode="grid">
+  <div class="app">
+    <header class="toolbar">
+      <div class="toolbar-start">
+        <button id="drawer-toggle" type="button" class="icon-btn drawer-toggle" aria-controls="sidebar" aria-expanded="false" aria-label="Show variants and presets">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+        <a class="brand" href="/murmurs/" aria-label="Back to Murmurs iterations">Murmurs</a>
+        <span class="brand-divider" aria-hidden="true">/</span>
+        <h1 class="app-title">Murmurations</h1>
+      </div>
+
+      <div class="toolbar-center">
+        <div class="segmented" role="group" aria-label="View">
+          <button id="mode-grid" type="button" aria-pressed="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            <span class="btn-label">Grid</span>
+          </button>
+          <button id="mode-single" type="button" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            <span class="btn-label">Single</span>
+          </button>
+        </div>
+        <button id="play-toggle" type="button" class="btn" aria-pressed="false" aria-label="Pause all"></button>
+        <span id="fps" class="fps" aria-hidden="true"></span>
+      </div>
+
+      <div class="toolbar-end">
+        <button id="import" type="button" class="btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 8 12 3 17 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span class="btn-label">Import</span>
+        </button>
+        <button id="export" type="button" class="btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="btn-label">Export</span>
+        </button>
+        <input id="import-file" type="file" accept="application/json,.json" hidden>
+      </div>
+    </header>
+
+    <aside id="sidebar" class="sidebar" aria-label="Variants and presets">
+      <div id="sidebar-content" class="sidebar-content"></div>
+    </aside>
+    <div id="drawer-scrim" class="drawer-scrim" aria-hidden="true"></div>
+
+    <main class="stage">
+      <div id="grid" class="grid" aria-label="All variants"></div>
+      <section id="single" class="single" aria-label="Selected variant" hidden></section>
+    </main>
+
+    <section id="panel" class="panel" aria-labelledby="panel-variant-name"></section>
+  </div>
+
+  <p id="status" class="toast" role="status" aria-live="polite"></p>
+  <noscript><p class="noscript">The Murmuration Explorer needs JavaScript to run its simulations.</p></noscript>
+</body>
+</html>

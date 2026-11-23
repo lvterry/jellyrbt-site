@@ -1,0 +1,13 @@
+{
+  "name": "jellyrbt-site",
+  "private": true,
+  "description": "Static JellyRabbit site. Build only vendors the DialKit vanilla bundle for the Murmurs study.",
+  "scripts": {
+    "build": "node scripts/vendor-dialkit.mjs",
+    "test": "node --test murmurs/tests/*.mjs",
+    "start": "python3 -m http.server 8000"
+  },
+  "devDependencies": {
+    "dialkit": "2.2.1"
+  }
+}
