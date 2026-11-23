@@ -17,19 +17,21 @@ export const DEFAULT_PARAMS = Object.freeze({
   inertia: 2.4,
   lag: 130,
   align: 1.3,
-  cohesion: 0.9,
+  cohesion: 1,
+  rejoin: 1.3,
+  rejoinRadius: 200,
   repel: 1.8,
   noise: 0.01,
   startleRadius: 70,
-  startleAngle: 2.2,
-  startleEvery: 4.5,
+  startleAngle: 1.9,
+  startleEvery: 7,
   zoom: 1,
-  size: 1.15,
+  size: 0.8,
   ink: 0.55,
   sky: 'dusk',
 });
 
-const NEIGHBOR_LIMIT = 48;
+const NEIGHBOR_LIMIT = 32;
 
 /** Periodic 3D hash grid, rebuilt each step. */
 class Grid3 {
@@ -83,6 +85,12 @@ class Grid3 {
 }
 
 const wrap = (v, size) => (v < 0 ? ((v % size) + size) % size : v >= size ? v % size : v);
+const torusMinus = (a, b, size) => {
+  let d = a - b;
+  if (d > size / 2) d -= size;
+  else if (d < -size / 2) d += size;
+  return d;
+};
 const len3 = (x, y, z) => Math.sqrt(x * x + y * y + z * z);
 
 function rng(seed) {
@@ -142,68 +150,87 @@ export function createFlock(params = DEFAULT_PARAMS, seed = 20261) {
   return flock;
 }
 
+// Circular mean per axis. An arithmetic mean on a torus jumps to the far side
+// of the world the moment the flock straddles a seam, which made the camera
+// lurch and left birds outside the frame.
 function centroidOf(flock) {
   const { pos, n, centroid } = flock;
-  let x = 0, y = 0, z = 0;
+  const twoPi = Math.PI * 2;
+  let sx = 0, sy = 0, sz = 0, cx = 0, cy = 0, cz = 0;
   for (let i = 0; i < n; i++) {
-    x += pos[i * 3];
-    y += pos[i * 3 + 1];
-    z += pos[i * 3 + 2];
+    const ax = (pos[i * 3] / WORLD.w) * twoPi;
+    const ay = (pos[i * 3 + 1] / WORLD.h) * twoPi;
+    const az = (pos[i * 3 + 2] / WORLD.d) * twoPi;
+    sx += Math.sin(ax); cx += Math.cos(ax);
+    sy += Math.sin(ay); cy += Math.cos(ay);
+    sz += Math.sin(az); cz += Math.cos(az);
   }
-  centroid[0] = x / n;
-  centroid[1] = y / n;
-  centroid[2] = z / n;
+  centroid[0] = ((Math.atan2(sx, cx) + twoPi) % twoPi) / twoPi * WORLD.w;
+  centroid[1] = ((Math.atan2(sy, cy) + twoPi) % twoPi) / twoPi * WORLD.h;
+  centroid[2] = ((Math.atan2(sz, cz) + twoPi) % twoPi) / twoPi * WORLD.d;
 }
 
-/** Nearest `neighbors` birds within `perception`, torus-aware. */
+/**
+ * Nearest `neighbors` birds, searched in expanding shells of grid cells.
+ * The link is topological — k nearest within a generous cap — so a stretched
+ * flock stays one connected network instead of shearing into sub-flocks that
+ * can never see each other again.
+ */
 function gather(flock, i) {
   const { pos, grid, params, neighborIndex, neighborDist } = flock;
   const x = pos[i * 3], y = pos[i * 3 + 1], z = pos[i * 3 + 2];
-  const r = params.perception;
-  const r2 = r * r;
+  const k = params.neighbors;
+  const reach = params.perception * 4;
+  const reach2 = reach * reach;
   const halfW = WORLD.w / 2, halfH = WORLD.h / 2, halfD = WORLD.d / 2;
-  const spanX = Math.ceil(r / grid.cellW), spanY = Math.ceil(r / grid.cellH), spanZ = Math.ceil(r / grid.cellD);
+  const maxSpan = Math.max(grid.cols, grid.rows, grid.lays);
   const baseX = Math.floor(x / grid.cellW), baseY = Math.floor(y / grid.cellH), baseZ = Math.floor(z / grid.cellD);
   let found = 0;
 
-  // Stop after NEIGHBOR_LIMIT hits: with k=8 the exact global nearest set is
-  // not worth a full pass over a dense flock. The start cell rotates per
-  // query so the truncation doesn't favour one corner of the grid.
-  scan:
-  for (let oz = -spanZ; oz <= spanZ; oz++) {
-    const gz = (((baseZ + oz) % grid.lays) + grid.lays) % grid.lays;
-    for (let oy = -spanY; oy <= spanY; oy++) {
-      const gy = (((baseY + oy) % grid.rows) + grid.rows) % grid.rows;
-      for (let ox = -spanX; ox <= spanX; ox++) {
-        const gx = (((baseX + ox) % grid.cols) + grid.cols) % grid.cols;
-        const cell = (gz * grid.rows + gy) * grid.cols + gx;
-        const end = grid.starts[cell + 1];
-        for (let s = grid.starts[cell]; s < end; s++) {
-          const j = grid.items[s];
-          if (j === i) continue;
-          let dx = pos[j * 3] - x;
-          let dy = pos[j * 3 + 1] - y;
-          let dz = pos[j * 3 + 2] - z;
-          if (dx > halfW) dx -= WORLD.w; else if (dx < -halfW) dx += WORLD.w;
-          if (dy > halfH) dy -= WORLD.h; else if (dy < -halfH) dy += WORLD.h;
-          if (dz > halfD) dz -= WORLD.d; else if (dz < -halfD) dz += WORLD.d;
-          const d2 = dx * dx + dy * dy + dz * dz;
-          if (d2 > r2) continue;
-          if (found === NEIGHBOR_LIMIT && d2 >= neighborDist[found - 1]) continue;
-          let at = found < NEIGHBOR_LIMIT ? found++ : NEIGHBOR_LIMIT - 1;
-          while (at > 0 && neighborDist[at - 1] > d2) {
-            neighborDist[at] = neighborDist[at - 1];
-            neighborIndex[at] = neighborIndex[at - 1];
-            at--;
+  const enough = Math.min(NEIGHBOR_LIMIT, k * 2);
+
+  for (let span = 1; span <= Math.min(maxSpan, 6); span++) {
+    for (let oz = -span; oz <= span; oz++) {
+      const edgeZ = Math.abs(oz) === span;
+      const gz = (((baseZ + oz) % grid.lays) + grid.lays) % grid.lays;
+      for (let oy = -span; oy <= span; oy++) {
+        const edgeY = Math.abs(oy) === span;
+        const gy = (((baseY + oy) % grid.rows) + grid.rows) % grid.rows;
+        for (let ox = -span; ox <= span; ox++) {
+          if (!edgeZ && !edgeY && Math.abs(ox) !== span) continue;
+          const gx = (((baseX + ox) % grid.cols) + grid.cols) % grid.cols;
+          const cell = (gz * grid.rows + gy) * grid.cols + gx;
+          const end = grid.starts[cell + 1];
+          for (let s = grid.starts[cell]; s < end; s++) {
+            const j = grid.items[s];
+            if (j === i) continue;
+            let dx = pos[j * 3] - x;
+            let dy = pos[j * 3 + 1] - y;
+            let dz = pos[j * 3 + 2] - z;
+            if (dx > halfW) dx -= WORLD.w; else if (dx < -halfW) dx += WORLD.w;
+            if (dy > halfH) dy -= WORLD.h; else if (dy < -halfH) dy += WORLD.h;
+            if (dz > halfD) dz -= WORLD.d; else if (dz < -halfD) dz += WORLD.d;
+            const d2 = dx * dx + dy * dy + dz * dz;
+            if (d2 > reach2) continue;
+            if (found === NEIGHBOR_LIMIT && d2 >= neighborDist[found - 1]) continue;
+            let at = found < NEIGHBOR_LIMIT ? found++ : NEIGHBOR_LIMIT - 1;
+            while (at > 0 && neighborDist[at - 1] > d2) {
+              neighborDist[at] = neighborDist[at - 1];
+              neighborIndex[at] = neighborIndex[at - 1];
+              at--;
+            }
+            neighborDist[at] = d2;
+            neighborIndex[at] = j;
+            // A handful of candidates is enough to pick k from, and short
+            // circuits the scan in a dense flock.
+            if (found >= enough) return k;
           }
-          neighborDist[at] = d2;
-          neighborIndex[at] = j;
-          if (found >= NEIGHBOR_LIMIT) break scan;
         }
       }
     }
+    if (found >= k) break;
   }
-  return Math.min(found, params.neighbors);
+  return Math.min(found, k);
 }
 
 function substep(flock, dt) {
@@ -252,10 +279,31 @@ function substep(flock, dt) {
           sz -= dz * f;
         }
       }
+      // Each term is bounded before it is summed: unbounded cohesion or
+      // separation flings birds out of the flock once a turn stretches it.
+      // Stray birds steer back toward the flock's centre. Without this a
+      // strong startle can hand a patch to a different heading for good,
+      // because topological neighbours alone cannot pull a broken group back.
+      const [fx, fy, fz] = flock.centroid;
+      const rdx = torusMinus(x, fx, WORLD.w);
+      const rdy = torusMinus(y, fy, WORLD.h);
+      const rdz = torusMinus(z, fz, WORLD.d);
+      const rd = len3(rdx, rdy, rdz);
+      if (rd > p.rejoinRadius) {
+        const pull = p.rejoin * Math.min(1, (rd - p.rejoinRadius) / p.rejoinRadius);
+        ax -= (rdx / rd) * pull;
+        ay -= (rdy / rd) * pull;
+        az -= (rdz / rd) * pull;
+      }
+
       const al = len3(ax, ay, az) || 1;
-      ax = (ax / al) * p.align + (cx / count / p.perception) * p.cohesion + sx * p.repel;
-      ay = (ay / al) * p.align + (cy / count / p.perception) * p.cohesion + sy * p.repel;
-      az = (az / al) * p.align + (cz / count / p.perception) * p.cohesion + sz * p.repel;
+      const cl = len3(cx, cy, cz) || 1;
+      const closeness = Math.min(1, cl / count / p.perception);
+      const sl = len3(sx, sy, sz);
+      const sepScale = sl > 1 ? p.repel / sl : p.repel;
+      ax = (ax / al) * p.align + (cx / cl) * p.cohesion * closeness + sx * sepScale;
+      ay = (ay / al) * p.align + (cy / cl) * p.cohesion * closeness + sy * sepScale;
+      az = (az / al) * p.align + (cz / cl) * p.cohesion * closeness + sz * sepScale;
     }
 
     const fl = len3(ax, ay, az) || 1;
@@ -376,6 +424,14 @@ function trackOnsets(flock) {
   }
 }
 
+function onsetSpread(flock) {
+  const times = [];
+  for (let i = 0; i < flock.n; i++) if (flock.onset[i] >= 0) times.push(flock.onset[i]);
+  if (times.length < 20) return 0;
+  times.sort((a, b) => a - b);
+  return times[Math.floor(times.length * 0.9)] - times[Math.floor(times.length * 0.1)];
+}
+
 /** Least-squares slope of turn-onset time against distance from the startle. */
 export function measureEvent(flock) {
   let sx = 0, sy = 0, sxx = 0, sxy = 0, count = 0;
@@ -392,19 +448,24 @@ export function measureEvent(flock) {
     fraction: count / flock.n,
     speed: slope > 1e-5 ? Math.round(1 / slope) : 0,
     onset: sy / count,
+    // Median-ish crossing time: the middle 80% of turn onsets.
+    spread: onsetSpread(flock),
     at: flock.startleAt,
   };
 }
 
 /** Advance by `dt` seconds of wall time, in fixed sub-steps. */
 export function step(flock, dt) {
+  // Never chase more than two sub-steps: dropping the backlog is better than
+  // spiralling when a slow machine falls behind.
   flock.accumulator = Math.min(flock.accumulator + Math.min(dt, 0.1), 0.25);
   let steps = 0;
-  while (flock.accumulator >= WORLD.step && steps < 8) {
+  while (flock.accumulator >= WORLD.step && steps < 2) {
     substep(flock, WORLD.step);
     flock.accumulator -= WORLD.step;
     steps++;
   }
+  if (flock.accumulator > WORLD.step) flock.accumulator = WORLD.step;
   centroidOf(flock);
 }
 

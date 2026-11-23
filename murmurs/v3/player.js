@@ -85,6 +85,16 @@ let focus = [...flock.centroid];
 // stays inside the canvas without hard-coding a zoom per parameter set.
 let fit = 1.8;
 
+function halfExtents() {
+  let mx = 0, my = 0;
+  for (let i = 0; i < flock.n; i++) {
+    const i3 = i * 3;
+    mx = Math.max(mx, Math.abs(torus(flock.pos[i3] - flock.centroid[0], WORLD.w)));
+    my = Math.max(my, Math.abs(torus(flock.pos[i3 + 1] - flock.centroid[1], WORLD.h)));
+  }
+  return [mx, my];
+}
+
 function gyration() {
   const [cx, cy, cz] = flock.centroid;
   let sum = 0;
@@ -135,6 +145,7 @@ const screenX = new Float32Array(3000);
 const screenY = new Float32Array(3000);
 const screenScale = new Float32Array(3000);
 const layers = [0, 1, 2];
+const bands = new Uint8Array(3000);
 
 function project() {
   const { pos, n } = flock;
@@ -168,18 +179,22 @@ function draw() {
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
   project();
   const birds = params.birds;
-  const ink = (SKIES[params.sky] ?? SKIES.dusk).ink;
-  ctx.fillStyle = ink;
+  ctx.fillStyle = (SKIES[params.sky] ?? SKIES.dusk).ink;
+  for (let i = 0; i < birds; i++) {
+    const depth = torus(flock.pos[i * 3 + 2] - focus[2], WORLD.d);
+    bands[i] = depth > 18 ? 0 : depth > -18 ? 1 : 2;
+  }
   // Far birds are demoted to a paler pass; near ones read as the dark core.
+  // One path per band keeps the fill count at three.
   for (const layer of layers) {
     ctx.globalAlpha = params.ink * (layer === 0 ? 0.45 : layer === 1 ? 0.75 : 1);
+    ctx.beginPath();
     for (let i = 0; i < birds; i++) {
-      const depth = torus(flock.pos[i * 3 + 2] - focus[2], WORLD.d);
-      const band = depth > 18 ? 0 : depth > -18 ? 1 : 2;
-      if (band !== layer) continue;
+      if (bands[i] !== layer) continue;
       const size = Math.max(0.6, params.size * screenScale[i] * 0.9);
-      ctx.fillRect(screenX[i], screenY[i], size * 1.1, size);
+      ctx.rect(screenX[i], screenY[i], size * 1.1, size);
     }
+    ctx.fill();
   }
   ctx.globalAlpha = 1;
 }
@@ -206,7 +221,10 @@ function tick(now) {
   // The camera trails the flock so a wandering flock stays framed.
   const k = running ? 1 - Math.exp(-dt * 2.2) : 1;
   for (let i = 0; i < 3; i++) focus[i] += (flock.centroid[i] - focus[i]) * k;
-  const targetFit = Math.min(3.2, Math.max(0.9, (0.34 * HEIGHT) / Math.max(30, gyration())));
+  // Fit every bird, not a radius estimate: a stretched or split flock would
+  // otherwise put part of itself outside the canvas.
+  const [halfX, halfY] = halfExtents();
+  const targetFit = Math.min(4.5, Math.max(0.5, Math.min((0.46 * WIDTH) / Math.max(60, halfX), (0.46 * HEIGHT) / Math.max(40, halfY))));
   fit += (targetFit - fit) * (running ? 1 - Math.exp(-dt * 1.4) : 1);
 
   draw();
@@ -233,8 +251,9 @@ function updateReadout() {
     readout.textContent = `Turn sweeping… · ${lag}`;
     return;
   }
-  const front = speed > 0 ? `${speed} u/s` : 'no clean front';
-  readout.textContent = `Last turn: ${front}, through ${Math.round(fraction * 100)}% of the flock · ${lag}`;
+  const crossing = flock.event.spread > 0 ? ` over ${flock.event.spread.toFixed(1)}s` : '';
+  const front = speed > 0 ? ` · front ${speed} u/s` : '';
+  readout.textContent = `Last turn: ${Math.round(fraction * 100)}% of the flock${crossing}${front} · ${lag}`;
 }
 
 /* ---------- Boot ---------- */
@@ -256,5 +275,5 @@ motion.addEventListener('change', ({ matches }) => {
 
 resize();
 new ResizeObserver(resize).observe(canvas);
-fit = Math.min(3.2, Math.max(0.9, (0.34 * HEIGHT) / Math.max(30, gyration())));
+fit = Math.min(4.5, Math.max(0.5, Math.min((0.46 * WIDTH) / 240, (0.46 * HEIGHT) / 150)));
 ensureLoop();

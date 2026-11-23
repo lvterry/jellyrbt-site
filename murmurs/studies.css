@@ -70,6 +70,20 @@ h1 {
 }
 
 .iterations strong { font-size: 1.15rem; }
+
+.tag {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  vertical-align: 0.12em;
+}
 .iterations small { display: block; font-size: 0.9rem; margin-top: 0.2rem; }
 
 figure { margin: 1.5rem 0 0; }

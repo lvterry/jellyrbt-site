@@ -1,7 +1,7 @@
 # Murmurs
 
 - `/murmurs/` lists the studies.
-- `/murmurs/v3/` is Propagation: an emergent model. Birds copy their neighbours' mean heading through a lag and a turn-rate cap, so a startle at the rim travels through the flock as a front. The page measures it: onset time against distance from the startle gives a front speed, reported live.
+- `/murmurs/v3/` is Propagation, marked experimental in the archive: an emergent model where birds copy their neighbours' mean heading through a lag and a turn-rate cap. A startle at the rim is measured after the fact — how much of the flock turned, how long it took, and (when the fit is meaningful) a front speed. After the stabilising pass below, turns read as *collective* rather than as a clean travelling front, so V2 stays the current study.
 - `/murmurs/v1/` is the Murmuration Explorer: 20 live flocking simulations with tunable parameters and saved presets.
 - `/murmurs/v2/` is Traveling Turn: one choreographed flock. Birds circulate through a flexible sheet, and a bank rolls from one end to the other. The dark folds come from projected overlap, not extra ink or trails. This is a visual study, not a new neighbor-based flocking model.
 
@@ -44,7 +44,15 @@ The panel is one DialKit root in its floating popover mode, pinned to the top-ri
 
 The measurement is post-hoc, not scripted: each bird's turn onset (first 34° away from its pre-startle heading) is regressed against its distance from the startle; the inverse slope is the front speed. Higher lag slows and narrows the front — at the far end it can fail to propagate at all, which is worth watching.
 
-Two findings from tuning, both visible in the prototypes: copying *stale* headings (rather than passing current headings through a lag) suppresses the turn instead of spreading it, and inertia alone already propagates a front — so delay is one factor in the speed, not the only cause.
+Findings from tuning: copying *stale* headings (rather than passing current headings through a lag) suppresses the turn instead of spreading it; inertia alone already propagates a front; and once the flock is made stable, the distance/onset slope stops being a clean travelling front. That is why V3 is labelled experimental.
+
+Performance and framing fixes that made V3 usable:
+
+- **Neighbour search short-circuits.** Scanning a whole grid shell after finding enough candidates cost 31 ms/step; stopping at ~2k candidates cut it to 1.4 ms. The browser run is now ~16.7 ms/frame at 2,600 birds and DPR 2, against ~17.8 ms for V2.
+- **No catch-up spiral.** At most two sub-steps per frame; the backlog is dropped instead of compounding a slow frame.
+- **Circular centroid.** An arithmetic mean on a torus jumps to the far side when the flock crosses a seam, which lurched the camera and pushed birds out of frame.
+- **Topological neighbours.** `k` nearest found in expanding shells, so a stretched flock stays one network instead of shearing into groups that can never see each other again.
+- **Bounded steering terms.** Cohesion and separation are normalised before summing, and birds further than `rejoinRadius` from the centre steer back. A 120 s run holds one group with 100% of birds.
 
 ## V1: Murmuration Explorer
 
