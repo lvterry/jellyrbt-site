@@ -1,7 +1,8 @@
 import {
   createFlock, sampleFlock, DEFAULT_PARAMS,
-  FORMS, KNOBS, SKIES, WIDTH, HEIGHT,
+  FORMS, KNOBS, WIDTH, HEIGHT,
 } from './flock.js';
+import { SKIES } from '../shared/sky.js';
 import { createDialKit, createDialRoot } from '../vendor/dialkit/index.js';
 
 const canvas = document.querySelector('#sky');

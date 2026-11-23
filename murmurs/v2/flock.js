@@ -1,3 +1,5 @@
+import { SKIES } from '../shared/sky.js';
+
 export const WIDTH = 960;
 export const HEIGHT = 576;
 const TAU = Math.PI * 2;
@@ -38,12 +40,6 @@ export const FORMS = {
   drift: { label: 'Loose drift', length: 224, girth: 124, roll: 0.55, waves: 0.5, curve: 32, curl: 12, twist: 0.2, depth: 6, rate: 0.8, scale: 0.88 },
 };
 
-export const SKIES = {
-  dusk: { label: 'Dusk', stops: ['#7d7597', '#b58da7', '#f2b6ab', '#f4c9b1'], ink: '#2b1a2e' },
-  rose: { label: 'Rose', stops: ['#8d6f92', '#c996a9', '#f3b8ae', '#fbd7c4'], ink: '#2f1c2b' },
-  haze: { label: 'Haze', stops: ['#97a4b8', '#bcc2ca', '#e6d5cf', '#f3e6dc'], ink: '#252a35' },
-  night: { label: 'Night', stops: ['#151a29', '#20283a', '#2d3648', '#44505f'], ink: '#d9d3cf' },
-};
 
 /** Rendering knobs are not part of the silhouette; geometry knobs are. */
 export const KNOBS = [

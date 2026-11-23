@@ -28,7 +28,16 @@ h1 {
 }
 
 .intro { margin: 0.75rem 0 2.5rem; }
-.intro, .version, small { color: var(--muted); }
+.intro, .version, small, .lede { color: var(--muted); }
+
+.lede { max-width: 46ch; margin: 0.75rem 0 0; }
+
+.readout {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
 
 .breadcrumb {
   display: inline-flex;

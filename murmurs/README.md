@@ -1,6 +1,7 @@
 # Murmurs
 
 - `/murmurs/` lists the studies.
+- `/murmurs/v3/` is Propagation: an emergent model. Birds copy their neighbours' mean heading through a lag and a turn-rate cap, so a startle at the rim travels through the flock as a front. The page measures it: onset time against distance from the startle gives a front speed, reported live.
 - `/murmurs/v1/` is the Murmuration Explorer: 20 live flocking simulations with tunable parameters and saved presets.
 - `/murmurs/v2/` is Traveling Turn: one choreographed flock. Birds circulate through a flexible sheet, and a bank rolls from one end to the other. The dark folds come from projected overlap, not extra ink or trails. This is a visual study, not a new neighbor-based flocking model.
 
@@ -37,6 +38,14 @@ The panel is one DialKit root in its floating popover mode, pinned to the top-ri
 
 `?form=hook&sky=night` links to a specific setup. Form changes ease into each other, so picking a new form morphs the silhouette rather than cutting to it. The study has no transport controls: it plays on load, and `prefers-reduced-motion` gets a still, fully formed frame instead of motion.
 
+### V3 model
+
+`flock3d.js` is a 3D torus world with a periodic hash grid. Each bird averages the unit headings of its `k` nearest neighbours, adds cohesion and separation, then follows that target through a first-order lag (`lag`, ms) with a capped turn rate (`inertia`, rad/s). A startle rotates every bird within `startleRadius` of the flock's rim-most bird about a mostly-horizontal axis, so the flock banks through its own slab and the projection folds.
+
+The measurement is post-hoc, not scripted: each bird's turn onset (first 34° away from its pre-startle heading) is regressed against its distance from the startle; the inverse slope is the front speed. Higher lag slows and narrows the front — at the far end it can fail to propagate at all, which is worth watching.
+
+Two findings from tuning, both visible in the prototypes: copying *stale* headings (rather than passing current headings through a lag) suppresses the turn instead of spreading it, and inertia alone already propagates a front — so delay is one factor in the speed, not the only cause.
+
 ## V1: Murmuration Explorer
 
 Spec: `docs/Project Murmuration Explorer.md`.
@@ -51,8 +60,10 @@ src/render/      renderer (trails, colour modes)
 src/ui/          app (state + RAF loop), gridView, singleView, paramPanel, presetList, dialogs
 v1/              the explorer page
 v2/              flock.js (shape model, forms, knobs) + player.js (DialKit panel, morph loop, canvas)
+v3/              flock3d.js (emergent model + measurement) + player.js (camera, HUD, DialKit)
+shared/          sky palettes used by V2 and V3
 vendor/dialkit/  generated: DialKit vanilla ESM + styles (npm run build)
-tests/           explorer.test.mjs (V1), traveling-turn.test.mjs (V2)
+tests/           explorer.test.mjs (V1), traveling-turn.test.mjs (V2), propagation.test.mjs (V3)
 ```
 
 ## Decisions
