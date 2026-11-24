@@ -25,6 +25,8 @@ export const DEFAULT_PARAMS = Object.freeze({
   startleRadius: 70,
   startleAngle: 1.9,
   startleEvery: 7,
+  commitShare: 0.3,
+  commitTime: 0.8,
   zoom: 1,
   size: 0.8,
   ink: 0.55,
@@ -114,6 +116,8 @@ export function createFlock(params = DEFAULT_PARAMS, seed = 20261) {
     target: new Float32Array(n * 3),
     accel: new Float32Array(n * 3),
     ref: new Float32Array(n * 3),
+    commitDir: new Float32Array(n * 3),
+    commitUntil: new Float32Array(n).fill(-1),
     onset: new Float32Array(n).fill(-1),
     dist: new Float32Array(n),
     grid: new Grid3(WORLD.w, WORLD.h, WORLD.d, Math.max(30, p.perception)),
@@ -254,7 +258,9 @@ function substep(flock, dt) {
     const i3 = i * 3;
     const x = pos[i3], y = pos[i3 + 1], z = pos[i3 + 2];
     let ax = 0, ay = 0, az = 0, cx = 0, cy = 0, cz = 0, sx = 0, sy = 0, sz = 0;
+    let dxm = 0, dym = 0, dzm = 0, dissenters = 0;
     const count = gather(flock, i);
+    const ux = unit[i3], uy = unit[i3 + 1], uz = unit[i3 + 2];
 
     if (count > 0) {
       for (let m = 0; m < count; m++) {
@@ -263,6 +269,14 @@ function substep(flock, dt) {
         ax += unit[j3];
         ay += unit[j3 + 1];
         az += unit[j3 + 2];
+        // Neighbours already pointing somewhere else: the raw material for a
+        // committed turn.
+        if (unit[j3] * ux + unit[j3 + 1] * uy + unit[j3 + 2] * uz < 0.82) {
+          dxm += unit[j3];
+          dym += unit[j3 + 1];
+          dzm += unit[j3 + 2];
+          dissenters++;
+        }
         let dx = pos[j3] - x, dy = pos[j3 + 1] - y, dz = pos[j3 + 2] - z;
         if (dx > halfW) dx -= WORLD.w; else if (dx < -halfW) dx += WORLD.w;
         if (dy > halfH) dy -= WORLD.h; else if (dy < -halfH) dy += WORLD.h;
@@ -296,22 +310,44 @@ function substep(flock, dt) {
         az -= (rdz / rd) * pull;
       }
 
+      // Commitment: if enough neighbours already point a different way, and
+      // they agree with each other, adopt their heading and hold it. This is
+      // what lets a turn lock in and travel instead of being averaged away by
+      // the birds that have not turned yet.
+      if (p.commitShare > 0 && dissenters >= Math.max(2, count * p.commitShare)) {
+        const dl = len3(dxm, dym, dzm);
+        if (dl > dissenters * 0.6 && flock.time >= flock.commitUntil[i]) {
+          flock.commitUntil[i] = flock.time + p.commitTime;
+          flock.commitDir[i3] = dxm / dl;
+          flock.commitDir[i3 + 1] = dym / dl;
+          flock.commitDir[i3 + 2] = dzm / dl;
+        }
+      }
+      const committed = flock.time < flock.commitUntil[i];
+
       const al = len3(ax, ay, az) || 1;
       const cl = len3(cx, cy, cz) || 1;
       const closeness = Math.min(1, cl / count / p.perception);
       const sl = len3(sx, sy, sz);
       const sepScale = sl > 1 ? p.repel / sl : p.repel;
-      ax = (ax / al) * p.align + (cx / cl) * p.cohesion * closeness + sx * sepScale;
-      ay = (ay / al) * p.align + (cy / cl) * p.cohesion * closeness + sy * sepScale;
-      az = (az / al) * p.align + (cz / cl) * p.cohesion * closeness + sz * sepScale;
+      if (committed) {
+        ax = flock.commitDir[i3] * p.align + sx * sepScale;
+        ay = flock.commitDir[i3 + 1] * p.align + sy * sepScale;
+        az = flock.commitDir[i3 + 2] * p.align + sz * sepScale;
+      } else {
+        ax = (ax / al) * p.align + (cx / cl) * p.cohesion * closeness + sx * sepScale;
+        ay = (ay / al) * p.align + (cy / cl) * p.cohesion * closeness + sy * sepScale;
+        az = (az / al) * p.align + (cz / cl) * p.cohesion * closeness + sz * sepScale;
+      }
     }
 
     const fl = len3(ax, ay, az) || 1;
     // The lag: the steering target is a first-order follower of what the bird
     // currently sees, so a neighbour's turn reaches this bird late.
-    target[i3] += (ax / fl - target[i3]) * blend;
-    target[i3 + 1] += (ay / fl - target[i3 + 1]) * blend;
-    target[i3 + 2] += (az / fl - target[i3 + 2]) * blend;
+    const follow = flock.time < flock.commitUntil[i] ? 1 : blend;
+    target[i3] += (ax / fl - target[i3]) * follow;
+    target[i3 + 1] += (ay / fl - target[i3 + 1]) * follow;
+    target[i3 + 2] += (az / fl - target[i3 + 2]) * follow;
     const tl = len3(target[i3], target[i3 + 1], target[i3 + 2]) || 1;
     const tx = target[i3] / tl, ty = target[i3 + 1] / tl, tz = target[i3 + 2] / tl;
 

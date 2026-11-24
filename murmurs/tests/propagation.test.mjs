@@ -18,7 +18,7 @@ test('a startle sweeps the flock and the front has a measurable speed', () => {
   assert.ok(flock.measured, 'the event should be measured once its window closes');
   assert.ok(flock.event.fraction > 0.5, `only ${flock.event.fraction} of the flock turned`);
   assert.ok(flock.event.spread > 0.2, `turn onset spread ${flock.event.spread}s`);
-  assert.ok(flock.event.speed >= 0);
+  assert.ok(flock.event.speed > 20, `front speed ${flock.event.speed} u/s`);
 });
 
 test('birds stay inside the torus and keep their speed', () => {

@@ -17,6 +17,8 @@ const KNOBS = [
   { key: 'inertia', label: 'Turn Rate', min: 0.6, max: 6, step: 0.1, group: 'Response' },
   { key: 'neighbors', label: 'Neighbours', min: 3, max: 16, step: 1, group: 'Response' },
   { key: 'perception', label: 'Perception', min: 36, max: 120, step: 2, group: 'Response' },
+  { key: 'commitShare', label: 'Commit Share', min: 0, max: 0.6, step: 0.02, group: 'Response' },
+  { key: 'commitTime', label: 'Commit Hold', min: 0, max: 1.5, step: 0.05, group: 'Response' },
   { key: 'startleRadius', label: 'Startle Size', min: 50, max: 240, step: 5, group: 'Startle' },
   { key: 'startleEvery', label: 'Every', min: 1.5, max: 9, step: 0.5, group: 'Startle' },
   { key: 'zoom', label: 'Zoom', min: 0.6, max: 1.8, step: 0.02, group: 'Frame' },
