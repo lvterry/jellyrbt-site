@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Twelve random flocks at once. One set of dials moves all of them; save the shapes worth keeping.">
+  <title>Contact sheet · Murmurs</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/allo/AlloVariableFriendly.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../vendor/dialkit/styles.css">
+  <link rel="stylesheet" href="../studies.css">
+  <script type="module" src="./player.js"></script>
+</head>
+<body class="contact-sheet">
+  <main class="study">
+    <header>
+      <a class="breadcrumb" href="/murmurs/">← Murmurs</a>
+      <h1>Contact sheet</h1>
+      <p class="lede">Twelve random shapes from one flock, all moved by the same dials. Save the ones worth keeping.</p>
+    </header>
+
+    <section class="sheet" aria-label="Twelve flock shapes">
+      <ol class="shapes" id="shapes"></ol>
+    </section>
+
+    <section class="saved" id="saved" aria-labelledby="saved-title" hidden>
+      <div class="saved-head">
+        <h2 id="saved-title">Saved versions</h2>
+        <p>Click one to put it back in its square.</p>
+      </div>
+      <ul class="saved-list" id="saved-list"></ul>
+    </section>
+
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+    <noscript>This study requires JavaScript to animate the flocks.</noscript>
+  </main>
+
+  <dialog class="preview" id="preview" tabindex="-1" aria-labelledby="preview-name">
+    <canvas id="preview-sky" class="shape-sky" width="960" height="576" aria-hidden="true"></canvas>
+    <div class="preview-bar">
+      <span class="preview-name" id="preview-name">Shape 01</span>
+      <button class="preview-close" type="button">Close</button>
+    </div>
+  </dialog>
+</body>
+</html>
