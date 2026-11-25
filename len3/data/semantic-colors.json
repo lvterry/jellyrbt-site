@@ -1,0 +1,2288 @@
+{
+  "Background": {
+    "Canvas": {
+      "$type": "color",
+      "$description": "--canvas",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.105882,
+              0.121569,
+              0.101961
+            ],
+            "alpha": 1,
+            "hex": "#1B1F1A"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "Default": {
+      "$type": "color",
+      "$description": "--background",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.12549,
+              0.137255,
+              0.121569
+            ],
+            "alpha": 1,
+            "hex": "#20231F"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "Subtle": {
+      "$type": "color",
+      "$description": "--surface-subtle",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.992157,
+              0.992157,
+              0.988235
+            ],
+            "alpha": 1,
+            "hex": "#FDFDFC"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.14902,
+              0.164706,
+              0.141176
+            ],
+            "alpha": 1,
+            "hex": "#262A24"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.992157,
+          0.992157,
+          0.988235
+        ],
+        "alpha": 1,
+        "hex": "#FDFDFC"
+      }
+    }
+  },
+  "Surface": {
+    "Default": {
+      "$type": "color",
+      "$description": "--card",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.12549,
+              0.137255,
+              0.121569
+            ],
+            "alpha": 1,
+            "hex": "#20231F"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "Elevated": {
+      "$type": "color",
+      "$description": "--popover",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.152941,
+              0.168627,
+              0.145098
+            ],
+            "alpha": 1,
+            "hex": "#272B25"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "Interactive": {
+      "Default": {
+        "$type": "color",
+        "$description": "--muted",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.964706,
+                0.960784,
+                0.94902
+              ],
+              "alpha": 1,
+              "hex": "#F6F5F2"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.160784,
+                0.176471,
+                0.152941
+              ],
+              "alpha": 1,
+              "hex": "#292D27"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.964706,
+            0.960784,
+            0.94902
+          ],
+          "alpha": 1,
+          "hex": "#F6F5F2"
+        }
+      },
+      "Hover": {
+        "$type": "color",
+        "$description": "var(--accent)",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.921317,
+                0.957451,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#EBF4FF"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.102174,
+                0.187203,
+                0.326649
+              ],
+              "alpha": 1,
+              "hex": "#1A3053"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.921317,
+            0.957451,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#EBF4FF"
+        }
+      }
+    },
+    "Disabled": {
+      "$type": "color",
+      "$description": "--disabled-background",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.956863,
+              0.960784,
+              0.945098
+            ],
+            "alpha": 1,
+            "hex": "#F4F5F1"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.160784,
+              0.180392,
+              0.14902
+            ],
+            "alpha": 1,
+            "hex": "#292E26"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.956863,
+          0.960784,
+          0.945098
+        ],
+        "alpha": 1,
+        "hex": "#F4F5F1"
+      }
+    },
+    "Secondary": {
+      "$type": "color",
+      "$description": "--secondary",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.945098,
+              0.937255,
+              0.921569
+            ],
+            "alpha": 1,
+            "hex": "#F1EFEB"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.188235,
+              0.207843,
+              0.176471
+            ],
+            "alpha": 1,
+            "hex": "#30352D"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.945098,
+          0.937255,
+          0.921569
+        ],
+        "alpha": 1,
+        "hex": "#F1EFEB"
+      }
+    },
+    "Ghost": {
+      "Hover": {
+        "$type": "color",
+        "$description": "var(--accent)",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.921317,
+                0.957451,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#EBF4FF"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.102174,
+                0.187203,
+                0.326649
+              ],
+              "alpha": 0.5,
+              "hex": "#1A3053"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.921317,
+            0.957451,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#EBF4FF"
+        }
+      }
+    }
+  },
+  "Text": {
+    "Primary": {
+      "$type": "color",
+      "$description": "--foreground",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.160784,
+              0.164706,
+              0.152941
+            ],
+            "alpha": 1,
+            "hex": "#292A27"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.905882,
+              0.913725,
+              0.882353
+            ],
+            "alpha": 1,
+            "hex": "#E7E9E1"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.160784,
+          0.164706,
+          0.152941
+        ],
+        "alpha": 1,
+        "hex": "#292A27"
+      }
+    },
+    "Secondary": {
+      "$type": "color",
+      "$description": "--muted-foreground",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.45098,
+              0.458824,
+              0.431373
+            ],
+            "alpha": 1,
+            "hex": "#73756E"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.658824,
+              0.678431,
+              0.627451
+            ],
+            "alpha": 1,
+            "hex": "#A8ADA0"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.45098,
+          0.458824,
+          0.431373
+        ],
+        "alpha": 1,
+        "hex": "#73756E"
+      }
+    },
+    "Muted": {
+      "$type": "color",
+      "$description": "--quiet",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.458824,
+              0.470588,
+              0.435294
+            ],
+            "alpha": 1,
+            "hex": "#75786F"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.631373,
+              0.654902,
+              0.596078
+            ],
+            "alpha": 1,
+            "hex": "#A1A798"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.458824,
+          0.470588,
+          0.435294
+        ],
+        "alpha": 1,
+        "hex": "#75786F"
+      }
+    },
+    "Disabled": {
+      "$type": "color",
+      "$description": "--disabled-foreground",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.588235,
+              0.6,
+              0.564706
+            ],
+            "alpha": 1,
+            "hex": "#969990"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.517647,
+              0.541176,
+              0.486275
+            ],
+            "alpha": 1,
+            "hex": "#848A7C"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.588235,
+          0.6,
+          0.564706
+        ],
+        "alpha": 1,
+        "hex": "#969990"
+      }
+    },
+    "On Secondary": {
+      "$type": "color",
+      "$description": "--secondary-foreground",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.286275,
+              0.290196,
+              0.270588
+            ],
+            "alpha": 1,
+            "hex": "#494A45"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.870588,
+              0.87451,
+              0.839216
+            ],
+            "alpha": 1,
+            "hex": "#DEDFD6"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.286275,
+          0.290196,
+          0.270588
+        ],
+        "alpha": 1,
+        "hex": "#494A45"
+      }
+    }
+  },
+  "Border": {
+    "Default": {
+      "$type": "color",
+      "$description": "--border",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.135703,
+              0.132514,
+              0.111265
+            ],
+            "alpha": 0.1,
+            "hex": "#23221C"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.223529,
+              0.243137,
+              0.203922
+            ],
+            "alpha": 1,
+            "hex": "#393E34"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.135703,
+          0.132514,
+          0.111265
+        ],
+        "alpha": 0.1,
+        "hex": "#23221C"
+      }
+    },
+    "Input": {
+      "$type": "color",
+      "$description": "--input",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.870588,
+              0.87451,
+              0.843137
+            ],
+            "alpha": 1,
+            "hex": "#DEDFD7"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.270588,
+              0.294118,
+              0.247059
+            ],
+            "alpha": 1,
+            "hex": "#454B3F"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.870588,
+          0.87451,
+          0.843137
+        ],
+        "alpha": 1,
+        "hex": "#DEDFD7"
+      }
+    },
+    "Photo": {
+      "$type": "color",
+      "$description": "--photo-outline",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.1,
+            "hex": "#000000"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 0.1,
+            "hex": "#FFFFFF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0.1,
+        "hex": "#000000"
+      }
+    },
+    "Card Hover": {
+      "$type": "color",
+      "$description": "color-mix(in oklch, var(--border), var(--foreground) 8%)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.149228,
+              0.146728,
+              0.129692
+            ],
+            "alpha": 0.172,
+            "hex": "#262521"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.316307,
+              0.268086,
+              0.280964
+            ],
+            "alpha": 1,
+            "hex": "#514448"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.149228,
+          0.146728,
+          0.129692
+        ],
+        "alpha": 0.172,
+        "hex": "#262521"
+      }
+    }
+  },
+  "Action": {
+    "Primary": {
+      "Default": {
+        "$type": "color",
+        "$description": "--primary",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.169184,
+                0.498083,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#2B7FFF"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.539122,
+                0.722294,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#89B8FF"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.169184,
+            0.498083,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#2B7FFF"
+        }
+      },
+      "Foreground": {
+        "$type": "color",
+        "$description": "--primary-foreground",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                1,
+                1,
+                1
+              ],
+              "alpha": 1,
+              "hex": "#FFFFFF"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0510546,
+                0.119711,
+                0.232466
+              ],
+              "alpha": 1,
+              "hex": "#0D1F3B"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            1,
+            1,
+            1
+          ],
+          "alpha": 1,
+          "hex": "#FFFFFF"
+        }
+      },
+      "Hover": {
+        "$type": "color",
+        "$description": "color-mix(in oklab, var(--primary) 90%, transparent)",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.169184,
+                0.498083,
+                1
+              ],
+              "alpha": 0.9,
+              "hex": "#2B7FFF"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.539122,
+                0.722294,
+                1
+              ],
+              "alpha": 0.9,
+              "hex": "#89B8FF"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.169184,
+            0.498083,
+            1
+          ],
+          "alpha": 0.9,
+          "hex": "#2B7FFF"
+        }
+      }
+    },
+    "Secondary": {
+      "Default": {
+        "$type": "color",
+        "$description": "--secondary",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.945098,
+                0.937255,
+                0.921569
+              ],
+              "alpha": 1,
+              "hex": "#F1EFEB"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.188235,
+                0.207843,
+                0.176471
+              ],
+              "alpha": 1,
+              "hex": "#30352D"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.945098,
+            0.937255,
+            0.921569
+          ],
+          "alpha": 1,
+          "hex": "#F1EFEB"
+        }
+      },
+      "Foreground": {
+        "$type": "color",
+        "$description": "--secondary-foreground",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.286275,
+                0.290196,
+                0.270588
+              ],
+              "alpha": 1,
+              "hex": "#494A45"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.870588,
+                0.87451,
+                0.839216
+              ],
+              "alpha": 1,
+              "hex": "#DEDFD6"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.286275,
+            0.290196,
+            0.270588
+          ],
+          "alpha": 1,
+          "hex": "#494A45"
+        }
+      },
+      "Hover": {
+        "$type": "color",
+        "$description": "color-mix(in oklab, var(--secondary) 80%, transparent)",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.945098,
+                0.937255,
+                0.921569
+              ],
+              "alpha": 0.8,
+              "hex": "#F1EFEB"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.188235,
+                0.207843,
+                0.176471
+              ],
+              "alpha": 0.8,
+              "hex": "#30352D"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.945098,
+            0.937255,
+            0.921569
+          ],
+          "alpha": 0.8,
+          "hex": "#F1EFEB"
+        }
+      }
+    }
+  },
+  "Selection": {
+    "Background": {
+      "$type": "color",
+      "$description": "--accent",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.921317,
+              0.957451,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#EBF4FF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.102174,
+              0.187203,
+              0.326649
+            ],
+            "alpha": 1,
+            "hex": "#1A3053"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.921317,
+          0.957451,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#EBF4FF"
+      }
+    },
+    "Foreground": {
+      "$type": "color",
+      "$description": "--accent-foreground",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0.327548,
+              0.828671
+            ],
+            "alpha": 1,
+            "hex": "#0054D3"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.659683,
+              0.800175,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#A8CCFF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0.327548,
+          0.828671
+        ],
+        "alpha": 1,
+        "hex": "#0054D3"
+      }
+    }
+  },
+  "Focus": {
+    "Ring": {
+      "$type": "color",
+      "$description": "--ring",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.174666,
+              0.475626,
+              0.959844
+            ],
+            "alpha": 1,
+            "hex": "#2D79F5"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.539122,
+              0.722294,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#89B8FF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.174666,
+          0.475626,
+          0.959844
+        ],
+        "alpha": 1,
+        "hex": "#2D79F5"
+      }
+    },
+    "Neutral": {
+      "$type": "color",
+      "$description": "--focus-neutral",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.444635,
+              0.444721,
+              0.444729
+            ],
+            "alpha": 1,
+            "hex": "#717171"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.681251,
+              0.681378,
+              0.68139
+            ],
+            "alpha": 1,
+            "hex": "#AEAEAE"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.444635,
+          0.444721,
+          0.444729
+        ],
+        "alpha": 1,
+        "hex": "#717171"
+      }
+    },
+    "Control Ring": {
+      "$type": "color",
+      "$description": "color-mix(in oklab, var(--ring) 50%, transparent)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.174666,
+              0.475626,
+              0.959844
+            ],
+            "alpha": 0.5,
+            "hex": "#2D79F5"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.539122,
+              0.722294,
+              1
+            ],
+            "alpha": 0.5,
+            "hex": "#89B8FF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.174666,
+          0.475626,
+          0.959844
+        ],
+        "alpha": 0.5,
+        "hex": "#2D79F5"
+      }
+    },
+    "Invalid Ring": {
+      "$type": "color",
+      "$description": "color-mix(in oklab, var(--destructive) 20%, transparent)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.729412,
+              0.25098,
+              0.231372
+            ],
+            "alpha": 0.2,
+            "hex": "#BA403B"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.929412,
+              0.619608,
+              0.57647
+            ],
+            "alpha": 0.4,
+            "hex": "#ED9E93"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.729412,
+          0.25098,
+          0.231372
+        ],
+        "alpha": 0.2,
+        "hex": "#BA403B"
+      }
+    }
+  },
+  "Input": {
+    "Focus Border": {
+      "$type": "color",
+      "$description": "--ring",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.174666,
+              0.475626,
+              0.959844
+            ],
+            "alpha": 1,
+            "hex": "#2D79F5"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.539122,
+              0.722294,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#89B8FF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.174666,
+          0.475626,
+          0.959844
+        ],
+        "alpha": 1,
+        "hex": "#2D79F5"
+      }
+    },
+    "Background": {
+      "$type": "color",
+      "$description": "#0000",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0,
+            "hex": "#000000"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.270588,
+              0.294118,
+              0.247059
+            ],
+            "alpha": 0.3,
+            "hex": "#454B3F"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0,
+        "hex": "#000000"
+      }
+    },
+    "Hover Background": {
+      "$type": "color",
+      "$description": "#0000",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0,
+            "hex": "#000000"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.270588,
+              0.294118,
+              0.247059
+            ],
+            "alpha": 0.5,
+            "hex": "#454B3F"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0,
+        "hex": "#000000"
+      }
+    }
+  },
+  "Feedback": {
+    "Destructive": {
+      "$type": "color",
+      "$description": "--destructive",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.729412,
+              0.25098,
+              0.231373
+            ],
+            "alpha": 1,
+            "hex": "#BA403B"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.929412,
+              0.619608,
+              0.576471
+            ],
+            "alpha": 1,
+            "hex": "#ED9E93"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.729412,
+          0.25098,
+          0.231373
+        ],
+        "alpha": 1,
+        "hex": "#BA403B"
+      }
+    },
+    "Success": {
+      "$type": "color",
+      "$description": "--good",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.321569,
+              0.443137,
+              0.356863
+            ],
+            "alpha": 1,
+            "hex": "#52715B"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.603922,
+              0.72549,
+              0.611765
+            ],
+            "alpha": 1,
+            "hex": "#9AB99C"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.321569,
+          0.443137,
+          0.356863
+        ],
+        "alpha": 1,
+        "hex": "#52715B"
+      }
+    }
+  },
+  "Sidebar": {
+    "Background": {
+      "$type": "color",
+      "$description": "--sidebar",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.12549,
+              0.137255,
+              0.121569
+            ],
+            "alpha": 1,
+            "hex": "#20231F"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    },
+    "Foreground": {
+      "$type": "color",
+      "$description": "--sidebar-foreground",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.160784,
+              0.164706,
+              0.152941
+            ],
+            "alpha": 1,
+            "hex": "#292A27"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.905882,
+              0.913725,
+              0.882353
+            ],
+            "alpha": 1,
+            "hex": "#E7E9E1"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.160784,
+          0.164706,
+          0.152941
+        ],
+        "alpha": 1,
+        "hex": "#292A27"
+      }
+    },
+    "Interactive": {
+      "$type": "color",
+      "$description": "--sidebar-accent",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.909804,
+              0.909804,
+              0.909804
+            ],
+            "alpha": 1,
+            "hex": "#E8E8E8"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.180392,
+              0.180392,
+              0.180392
+            ],
+            "alpha": 1,
+            "hex": "#2E2E2E"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.909804,
+          0.909804,
+          0.909804
+        ],
+        "alpha": 1,
+        "hex": "#E8E8E8"
+      }
+    },
+    "Border": {
+      "$type": "color",
+      "$description": "--sidebar-border",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.135703,
+              0.132514,
+              0.111265
+            ],
+            "alpha": 0.1,
+            "hex": "#23221C"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.223529,
+              0.243137,
+              0.203922
+            ],
+            "alpha": 1,
+            "hex": "#393E34"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.135703,
+          0.132514,
+          0.111265
+        ],
+        "alpha": 0.1,
+        "hex": "#23221C"
+      }
+    }
+  },
+  "Risk": {
+    "High": {
+      "Background": {
+        "$type": "color",
+        "$description": "--high-bg",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.988235,
+                0.941176,
+                0.929412
+              ],
+              "alpha": 1,
+              "hex": "#FCF0ED"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.239216,
+                0.160784,
+                0.145098
+              ],
+              "alpha": 1,
+              "hex": "#3D2925"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.988235,
+            0.941176,
+            0.929412
+          ],
+          "alpha": 1,
+          "hex": "#FCF0ED"
+        }
+      },
+      "Foreground": {
+        "$type": "color",
+        "$description": "--high-fg",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.67451,
+                0.317647,
+                0.254902
+              ],
+              "alpha": 1,
+              "hex": "#AC5141"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.937255,
+                0.678431,
+                0.607843
+              ],
+              "alpha": 1,
+              "hex": "#EFAD9B"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.67451,
+            0.317647,
+            0.254902
+          ],
+          "alpha": 1,
+          "hex": "#AC5141"
+        }
+      },
+      "Border": {
+        "$type": "color",
+        "$description": "--high-border",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.941176,
+                0.831373,
+                0.8
+              ],
+              "alpha": 1,
+              "hex": "#F0D4CC"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.407843,
+                0.25098,
+                0.219608
+              ],
+              "alpha": 1,
+              "hex": "#684038"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.941176,
+            0.831373,
+            0.8
+          ],
+          "alpha": 1,
+          "hex": "#F0D4CC"
+        }
+      }
+    },
+    "Medium": {
+      "Background": {
+        "$type": "color",
+        "$description": "--medium-bg",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.984314,
+                0.960784,
+                0.913725
+              ],
+              "alpha": 1,
+              "hex": "#FBF5E9"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.223529,
+                0.2,
+                0.137255
+              ],
+              "alpha": 1,
+              "hex": "#393323"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.984314,
+            0.960784,
+            0.913725
+          ],
+          "alpha": 1,
+          "hex": "#FBF5E9"
+        }
+      },
+      "Foreground": {
+        "$type": "color",
+        "$description": "--medium-fg",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.572549,
+                0.439216,
+                0.152941
+              ],
+              "alpha": 1,
+              "hex": "#927027"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.839216,
+                0.737255,
+                0.490196
+              ],
+              "alpha": 1,
+              "hex": "#D6BC7D"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.572549,
+            0.439216,
+            0.152941
+          ],
+          "alpha": 1,
+          "hex": "#927027"
+        }
+      },
+      "Border": {
+        "$type": "color",
+        "$description": "--medium-border",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.917647,
+                0.87451,
+                0.745098
+              ],
+              "alpha": 1,
+              "hex": "#EADFBE"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.356863,
+                0.305882,
+                0.188235
+              ],
+              "alpha": 1,
+              "hex": "#5B4E30"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.917647,
+            0.87451,
+            0.745098
+          ],
+          "alpha": 1,
+          "hex": "#EADFBE"
+        }
+      }
+    },
+    "Low": {
+      "Background": {
+        "$type": "color",
+        "$description": "--low-bg",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.929412,
+                0.956863,
+                0.933333
+              ],
+              "alpha": 1,
+              "hex": "#EDF4EE"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.14902,
+                0.219608,
+                0.168627
+              ],
+              "alpha": 1,
+              "hex": "#26382B"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.929412,
+            0.956863,
+            0.933333
+          ],
+          "alpha": 1,
+          "hex": "#EDF4EE"
+        }
+      },
+      "Foreground": {
+        "$type": "color",
+        "$description": "--low-fg",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.352941,
+                0.458824,
+                0.368627
+              ],
+              "alpha": 1,
+              "hex": "#5A755E"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.67451,
+                0.772549,
+                0.643137
+              ],
+              "alpha": 1,
+              "hex": "#ACC5A4"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.352941,
+            0.458824,
+            0.368627
+          ],
+          "alpha": 1,
+          "hex": "#5A755E"
+        }
+      },
+      "Border": {
+        "$type": "color",
+        "$description": "--low-border",
+        "$extensions": {
+          "com.len3.modes": {
+            "Light": {
+              "colorSpace": "srgb",
+              "components": [
+                0.847059,
+                0.898039,
+                0.85098
+              ],
+              "alpha": 1,
+              "hex": "#D8E5D9"
+            },
+            "Dark": {
+              "colorSpace": "srgb",
+              "components": [
+                0.239216,
+                0.345098,
+                0.254902
+              ],
+              "alpha": 1,
+              "hex": "#3D5841"
+            }
+          }
+        },
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.847059,
+            0.898039,
+            0.85098
+          ],
+          "alpha": 1,
+          "hex": "#D8E5D9"
+        }
+      }
+    }
+  },
+  "Destructive": {
+    "Default": {
+      "$type": "color",
+      "$description": "var(--destructive)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.729412,
+              0.25098,
+              0.231373
+            ],
+            "alpha": 1,
+            "hex": "#BA403B"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.929412,
+              0.619608,
+              0.57647
+            ],
+            "alpha": 0.6,
+            "hex": "#ED9E93"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.729412,
+          0.25098,
+          0.231373
+        ],
+        "alpha": 1,
+        "hex": "#BA403B"
+      }
+    },
+    "Hover": {
+      "$type": "color",
+      "$description": "color-mix(in oklab, var(--destructive) 90%, transparent)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.729412,
+              0.25098,
+              0.231372
+            ],
+            "alpha": 0.9,
+            "hex": "#BA403B"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.929412,
+              0.619608,
+              0.57647
+            ],
+            "alpha": 0.9,
+            "hex": "#ED9E93"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.729412,
+          0.25098,
+          0.231372
+        ],
+        "alpha": 0.9,
+        "hex": "#BA403B"
+      }
+    },
+    "Foreground": {
+      "$type": "color",
+      "$description": "#ffffff",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#FFFFFF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      }
+    }
+  },
+  "Composer": {
+    "Send Hover": {
+      "$type": "color",
+      "$description": "color-mix(in oklch, var(--primary), var(--foreground) 10%)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.177164,
+              0.464945,
+              0.929604
+            ],
+            "alpha": 1,
+            "hex": "#2D77ED"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.574753,
+              0.742231,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#93BDFF"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.177164,
+          0.464945,
+          0.929604
+        ],
+        "alpha": 1,
+        "hex": "#2D77ED"
+      }
+    },
+    "Attach Hover": {
+      "$type": "color",
+      "$description": "color-mix(in oklch, var(--muted), var(--foreground) 6%)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.917467,
+              0.902955,
+              0.906639
+            ],
+            "alpha": 1,
+            "hex": "#EAE6E7"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.23048,
+              0.198994,
+              0.207309
+            ],
+            "alpha": 1,
+            "hex": "#3B3335"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.917467,
+          0.902955,
+          0.906639
+        ],
+        "alpha": 1,
+        "hex": "#EAE6E7"
+      }
+    }
+  },
+  "Overlay": {
+    "Scrim": {
+      "$type": "color",
+      "$description": "rgb(0 0 0 / 0.5)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.5,
+            "hex": "#000000"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0
+            ],
+            "alpha": 0.5,
+            "hex": "#000000"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "alpha": 0.5,
+        "hex": "#000000"
+      }
+    }
+  },
+  "Chat": {
+    "Agent Background": {
+      "$type": "color",
+      "$description": "oklch(from var(--primary) 0.93 calc(c * 0.4) h)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.778954,
+              0.916282,
+              1
+            ],
+            "alpha": 1,
+            "hex": "#C7EAFF"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.122589,
+              0.180274,
+              0.274
+            ],
+            "alpha": 1,
+            "hex": "#1F2E46"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.778954,
+          0.916282,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#C7EAFF"
+      }
+    },
+    "Agent Foreground": {
+      "$type": "color",
+      "$description": "var(--foreground)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.160784,
+              0.164706,
+              0.152941
+            ],
+            "alpha": 1,
+            "hex": "#292A27"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.905882,
+              0.913725,
+              0.882353
+            ],
+            "alpha": 1,
+            "hex": "#E7E9E1"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.160784,
+          0.164706,
+          0.152941
+        ],
+        "alpha": 1,
+        "hex": "#292A27"
+      }
+    },
+    "Buyer Background": {
+      "$type": "color",
+      "$description": "var(--muted)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.964706,
+              0.960784,
+              0.94902
+            ],
+            "alpha": 1,
+            "hex": "#F6F5F2"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.160784,
+              0.176471,
+              0.152941
+            ],
+            "alpha": 1,
+            "hex": "#292D27"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.964706,
+          0.960784,
+          0.94902
+        ],
+        "alpha": 1,
+        "hex": "#F6F5F2"
+      }
+    },
+    "Buyer Foreground": {
+      "$type": "color",
+      "$description": "var(--foreground)",
+      "$extensions": {
+        "com.len3.modes": {
+          "Light": {
+            "colorSpace": "srgb",
+            "components": [
+              0.160784,
+              0.164706,
+              0.152941
+            ],
+            "alpha": 1,
+            "hex": "#292A27"
+          },
+          "Dark": {
+            "colorSpace": "srgb",
+            "components": [
+              0.905882,
+              0.913725,
+              0.882353
+            ],
+            "alpha": 1,
+            "hex": "#E7E9E1"
+          }
+        }
+      },
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.160784,
+          0.164706,
+          0.152941
+        ],
+        "alpha": 1,
+        "hex": "#292A27"
+      }
+    }
+  }
+}

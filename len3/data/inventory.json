@@ -1,0 +1,1408 @@
+{
+  "Button": [
+    [
+      "10:32",
+      "Variant=Default, Size=XS, State=Default"
+    ],
+    [
+      "10:37",
+      "Variant=Default, Size=SM, State=Default"
+    ],
+    [
+      "10:42",
+      "Variant=Default, Size=Default, State=Default"
+    ],
+    [
+      "10:47",
+      "Variant=Default, Size=LG, State=Default"
+    ],
+    [
+      "10:52",
+      "Variant=Destructive, Size=XS, State=Default"
+    ],
+    [
+      "10:57",
+      "Variant=Destructive, Size=SM, State=Default"
+    ],
+    [
+      "10:62",
+      "Variant=Destructive, Size=Default, State=Default"
+    ],
+    [
+      "10:67",
+      "Variant=Destructive, Size=LG, State=Default"
+    ],
+    [
+      "10:72",
+      "Variant=Outline, Size=XS, State=Default"
+    ],
+    [
+      "10:77",
+      "Variant=Outline, Size=SM, State=Default"
+    ],
+    [
+      "10:82",
+      "Variant=Outline, Size=Default, State=Default"
+    ],
+    [
+      "10:87",
+      "Variant=Outline, Size=LG, State=Default"
+    ],
+    [
+      "10:92",
+      "Variant=Secondary, Size=XS, State=Default"
+    ],
+    [
+      "10:97",
+      "Variant=Secondary, Size=SM, State=Default"
+    ],
+    [
+      "10:102",
+      "Variant=Secondary, Size=Default, State=Default"
+    ],
+    [
+      "10:107",
+      "Variant=Secondary, Size=LG, State=Default"
+    ],
+    [
+      "10:112",
+      "Variant=Ghost, Size=XS, State=Default"
+    ],
+    [
+      "10:117",
+      "Variant=Ghost, Size=SM, State=Default"
+    ],
+    [
+      "10:122",
+      "Variant=Ghost, Size=Default, State=Default"
+    ],
+    [
+      "10:127",
+      "Variant=Ghost, Size=LG, State=Default"
+    ],
+    [
+      "10:132",
+      "Variant=Link, Size=XS, State=Default"
+    ],
+    [
+      "10:137",
+      "Variant=Link, Size=SM, State=Default"
+    ],
+    [
+      "10:142",
+      "Variant=Link, Size=Default, State=Default"
+    ],
+    [
+      "10:147",
+      "Variant=Link, Size=LG, State=Default"
+    ],
+    [
+      "10:158",
+      "Variant=Default, Size=Default, State=Hover"
+    ],
+    [
+      "139:1250",
+      "Variant=Default, Size=XS, State=Hover"
+    ],
+    [
+      "139:1253",
+      "Variant=Default, Size=SM, State=Hover"
+    ],
+    [
+      "139:1256",
+      "Variant=Default, Size=LG, State=Hover"
+    ],
+    [
+      "10:163",
+      "Variant=Default, Size=Default, State=Focus"
+    ],
+    [
+      "139:1259",
+      "Variant=Default, Size=XS, State=Focus"
+    ],
+    [
+      "139:1262",
+      "Variant=Default, Size=SM, State=Focus"
+    ],
+    [
+      "139:1265",
+      "Variant=Default, Size=LG, State=Focus"
+    ],
+    [
+      "10:168",
+      "Variant=Default, Size=Default, State=Disabled"
+    ],
+    [
+      "139:1268",
+      "Variant=Default, Size=XS, State=Disabled"
+    ],
+    [
+      "139:1271",
+      "Variant=Default, Size=SM, State=Disabled"
+    ],
+    [
+      "139:1274",
+      "Variant=Default, Size=LG, State=Disabled"
+    ],
+    [
+      "10:178",
+      "Variant=Destructive, Size=Default, State=Hover"
+    ],
+    [
+      "139:1277",
+      "Variant=Destructive, Size=XS, State=Hover"
+    ],
+    [
+      "139:1280",
+      "Variant=Destructive, Size=SM, State=Hover"
+    ],
+    [
+      "139:1283",
+      "Variant=Destructive, Size=LG, State=Hover"
+    ],
+    [
+      "10:183",
+      "Variant=Destructive, Size=Default, State=Focus"
+    ],
+    [
+      "139:1286",
+      "Variant=Destructive, Size=XS, State=Focus"
+    ],
+    [
+      "139:1289",
+      "Variant=Destructive, Size=SM, State=Focus"
+    ],
+    [
+      "139:1292",
+      "Variant=Destructive, Size=LG, State=Focus"
+    ],
+    [
+      "10:188",
+      "Variant=Destructive, Size=Default, State=Disabled"
+    ],
+    [
+      "139:1295",
+      "Variant=Destructive, Size=XS, State=Disabled"
+    ],
+    [
+      "139:1298",
+      "Variant=Destructive, Size=SM, State=Disabled"
+    ],
+    [
+      "139:1301",
+      "Variant=Destructive, Size=LG, State=Disabled"
+    ],
+    [
+      "10:198",
+      "Variant=Outline, Size=Default, State=Hover"
+    ],
+    [
+      "139:1304",
+      "Variant=Outline, Size=XS, State=Hover"
+    ],
+    [
+      "139:1307",
+      "Variant=Outline, Size=SM, State=Hover"
+    ],
+    [
+      "139:1310",
+      "Variant=Outline, Size=LG, State=Hover"
+    ],
+    [
+      "10:203",
+      "Variant=Outline, Size=Default, State=Focus"
+    ],
+    [
+      "139:1313",
+      "Variant=Outline, Size=XS, State=Focus"
+    ],
+    [
+      "139:1316",
+      "Variant=Outline, Size=SM, State=Focus"
+    ],
+    [
+      "139:1319",
+      "Variant=Outline, Size=LG, State=Focus"
+    ],
+    [
+      "10:208",
+      "Variant=Outline, Size=Default, State=Disabled"
+    ],
+    [
+      "139:1322",
+      "Variant=Outline, Size=XS, State=Disabled"
+    ],
+    [
+      "139:1325",
+      "Variant=Outline, Size=SM, State=Disabled"
+    ],
+    [
+      "139:1328",
+      "Variant=Outline, Size=LG, State=Disabled"
+    ],
+    [
+      "10:218",
+      "Variant=Secondary, Size=Default, State=Hover"
+    ],
+    [
+      "139:1331",
+      "Variant=Secondary, Size=XS, State=Hover"
+    ],
+    [
+      "139:1334",
+      "Variant=Secondary, Size=SM, State=Hover"
+    ],
+    [
+      "139:1337",
+      "Variant=Secondary, Size=LG, State=Hover"
+    ],
+    [
+      "10:223",
+      "Variant=Secondary, Size=Default, State=Focus"
+    ],
+    [
+      "139:1340",
+      "Variant=Secondary, Size=XS, State=Focus"
+    ],
+    [
+      "139:1343",
+      "Variant=Secondary, Size=SM, State=Focus"
+    ],
+    [
+      "139:1346",
+      "Variant=Secondary, Size=LG, State=Focus"
+    ],
+    [
+      "10:228",
+      "Variant=Secondary, Size=Default, State=Disabled"
+    ],
+    [
+      "139:1349",
+      "Variant=Secondary, Size=XS, State=Disabled"
+    ],
+    [
+      "139:1352",
+      "Variant=Secondary, Size=SM, State=Disabled"
+    ],
+    [
+      "139:1355",
+      "Variant=Secondary, Size=LG, State=Disabled"
+    ],
+    [
+      "10:238",
+      "Variant=Ghost, Size=Default, State=Hover"
+    ],
+    [
+      "139:1358",
+      "Variant=Ghost, Size=XS, State=Hover"
+    ],
+    [
+      "139:1361",
+      "Variant=Ghost, Size=SM, State=Hover"
+    ],
+    [
+      "139:1364",
+      "Variant=Ghost, Size=LG, State=Hover"
+    ],
+    [
+      "10:243",
+      "Variant=Ghost, Size=Default, State=Focus"
+    ],
+    [
+      "139:1367",
+      "Variant=Ghost, Size=XS, State=Focus"
+    ],
+    [
+      "139:1370",
+      "Variant=Ghost, Size=SM, State=Focus"
+    ],
+    [
+      "139:1373",
+      "Variant=Ghost, Size=LG, State=Focus"
+    ],
+    [
+      "10:248",
+      "Variant=Ghost, Size=Default, State=Disabled"
+    ],
+    [
+      "139:1376",
+      "Variant=Ghost, Size=XS, State=Disabled"
+    ],
+    [
+      "139:1379",
+      "Variant=Ghost, Size=SM, State=Disabled"
+    ],
+    [
+      "139:1382",
+      "Variant=Ghost, Size=LG, State=Disabled"
+    ],
+    [
+      "10:258",
+      "Variant=Link, Size=Default, State=Hover"
+    ],
+    [
+      "139:1385",
+      "Variant=Link, Size=XS, State=Hover"
+    ],
+    [
+      "139:1388",
+      "Variant=Link, Size=SM, State=Hover"
+    ],
+    [
+      "139:1391",
+      "Variant=Link, Size=LG, State=Hover"
+    ],
+    [
+      "10:263",
+      "Variant=Link, Size=Default, State=Focus"
+    ],
+    [
+      "139:1394",
+      "Variant=Link, Size=XS, State=Focus"
+    ],
+    [
+      "139:1397",
+      "Variant=Link, Size=SM, State=Focus"
+    ],
+    [
+      "139:1400",
+      "Variant=Link, Size=LG, State=Focus"
+    ],
+    [
+      "10:268",
+      "Variant=Link, Size=Default, State=Disabled"
+    ],
+    [
+      "139:1403",
+      "Variant=Link, Size=XS, State=Disabled"
+    ],
+    [
+      "139:1406",
+      "Variant=Link, Size=SM, State=Disabled"
+    ],
+    [
+      "139:1409",
+      "Variant=Link, Size=LG, State=Disabled"
+    ]
+  ],
+  "Icon Button": [
+    [
+      "10:274",
+      "Variant=Default, Size=XS, State=Default"
+    ],
+    [
+      "10:278",
+      "Variant=Default, Size=SM, State=Default"
+    ],
+    [
+      "10:282",
+      "Variant=Default, Size=Default, State=Default"
+    ],
+    [
+      "10:286",
+      "Variant=Default, Size=LG, State=Default"
+    ],
+    [
+      "10:290",
+      "Variant=Destructive, Size=XS, State=Default"
+    ],
+    [
+      "10:294",
+      "Variant=Destructive, Size=SM, State=Default"
+    ],
+    [
+      "10:298",
+      "Variant=Destructive, Size=Default, State=Default"
+    ],
+    [
+      "10:302",
+      "Variant=Destructive, Size=LG, State=Default"
+    ],
+    [
+      "10:306",
+      "Variant=Outline, Size=XS, State=Default"
+    ],
+    [
+      "10:310",
+      "Variant=Outline, Size=SM, State=Default"
+    ],
+    [
+      "10:314",
+      "Variant=Outline, Size=Default, State=Default"
+    ],
+    [
+      "10:318",
+      "Variant=Outline, Size=LG, State=Default"
+    ],
+    [
+      "10:322",
+      "Variant=Secondary, Size=XS, State=Default"
+    ],
+    [
+      "10:326",
+      "Variant=Secondary, Size=SM, State=Default"
+    ],
+    [
+      "10:330",
+      "Variant=Secondary, Size=Default, State=Default"
+    ],
+    [
+      "10:334",
+      "Variant=Secondary, Size=LG, State=Default"
+    ],
+    [
+      "10:338",
+      "Variant=Ghost, Size=XS, State=Default"
+    ],
+    [
+      "10:342",
+      "Variant=Ghost, Size=SM, State=Default"
+    ],
+    [
+      "10:346",
+      "Variant=Ghost, Size=Default, State=Default"
+    ],
+    [
+      "10:350",
+      "Variant=Ghost, Size=LG, State=Default"
+    ],
+    [
+      "139:3339",
+      "Variant=Default, Size=XS, State=Hover"
+    ],
+    [
+      "139:3343",
+      "Variant=Default, Size=XS, State=Focus"
+    ],
+    [
+      "139:3347",
+      "Variant=Default, Size=XS, State=Disabled"
+    ],
+    [
+      "139:3351",
+      "Variant=Default, Size=SM, State=Hover"
+    ],
+    [
+      "139:3355",
+      "Variant=Default, Size=SM, State=Focus"
+    ],
+    [
+      "139:3359",
+      "Variant=Default, Size=SM, State=Disabled"
+    ],
+    [
+      "139:3363",
+      "Variant=Default, Size=Default, State=Hover"
+    ],
+    [
+      "139:3367",
+      "Variant=Default, Size=Default, State=Focus"
+    ],
+    [
+      "139:3371",
+      "Variant=Default, Size=Default, State=Disabled"
+    ],
+    [
+      "139:3375",
+      "Variant=Default, Size=LG, State=Hover"
+    ],
+    [
+      "139:3379",
+      "Variant=Default, Size=LG, State=Focus"
+    ],
+    [
+      "139:3383",
+      "Variant=Default, Size=LG, State=Disabled"
+    ],
+    [
+      "139:3387",
+      "Variant=Destructive, Size=XS, State=Hover"
+    ],
+    [
+      "139:3391",
+      "Variant=Destructive, Size=XS, State=Focus"
+    ],
+    [
+      "139:3395",
+      "Variant=Destructive, Size=XS, State=Disabled"
+    ],
+    [
+      "139:3399",
+      "Variant=Destructive, Size=SM, State=Hover"
+    ],
+    [
+      "139:3403",
+      "Variant=Destructive, Size=SM, State=Focus"
+    ],
+    [
+      "139:3407",
+      "Variant=Destructive, Size=SM, State=Disabled"
+    ],
+    [
+      "139:3411",
+      "Variant=Destructive, Size=Default, State=Hover"
+    ],
+    [
+      "139:3415",
+      "Variant=Destructive, Size=Default, State=Focus"
+    ],
+    [
+      "139:3419",
+      "Variant=Destructive, Size=Default, State=Disabled"
+    ],
+    [
+      "139:3423",
+      "Variant=Destructive, Size=LG, State=Hover"
+    ],
+    [
+      "139:3427",
+      "Variant=Destructive, Size=LG, State=Focus"
+    ],
+    [
+      "139:3431",
+      "Variant=Destructive, Size=LG, State=Disabled"
+    ],
+    [
+      "139:3435",
+      "Variant=Outline, Size=XS, State=Hover"
+    ],
+    [
+      "139:3439",
+      "Variant=Outline, Size=XS, State=Focus"
+    ],
+    [
+      "139:3443",
+      "Variant=Outline, Size=XS, State=Disabled"
+    ],
+    [
+      "139:3447",
+      "Variant=Outline, Size=SM, State=Hover"
+    ],
+    [
+      "139:3451",
+      "Variant=Outline, Size=SM, State=Focus"
+    ],
+    [
+      "139:3455",
+      "Variant=Outline, Size=SM, State=Disabled"
+    ],
+    [
+      "139:3459",
+      "Variant=Outline, Size=Default, State=Hover"
+    ],
+    [
+      "139:3463",
+      "Variant=Outline, Size=Default, State=Focus"
+    ],
+    [
+      "139:3467",
+      "Variant=Outline, Size=Default, State=Disabled"
+    ],
+    [
+      "139:3471",
+      "Variant=Outline, Size=LG, State=Hover"
+    ],
+    [
+      "139:3475",
+      "Variant=Outline, Size=LG, State=Focus"
+    ],
+    [
+      "139:3479",
+      "Variant=Outline, Size=LG, State=Disabled"
+    ],
+    [
+      "139:3483",
+      "Variant=Secondary, Size=XS, State=Hover"
+    ],
+    [
+      "139:3487",
+      "Variant=Secondary, Size=XS, State=Focus"
+    ],
+    [
+      "139:3491",
+      "Variant=Secondary, Size=XS, State=Disabled"
+    ],
+    [
+      "139:3495",
+      "Variant=Secondary, Size=SM, State=Hover"
+    ],
+    [
+      "139:3499",
+      "Variant=Secondary, Size=SM, State=Focus"
+    ],
+    [
+      "139:3503",
+      "Variant=Secondary, Size=SM, State=Disabled"
+    ],
+    [
+      "139:3507",
+      "Variant=Secondary, Size=Default, State=Hover"
+    ],
+    [
+      "139:3511",
+      "Variant=Secondary, Size=Default, State=Focus"
+    ],
+    [
+      "139:3515",
+      "Variant=Secondary, Size=Default, State=Disabled"
+    ],
+    [
+      "139:3519",
+      "Variant=Secondary, Size=LG, State=Hover"
+    ],
+    [
+      "139:3523",
+      "Variant=Secondary, Size=LG, State=Focus"
+    ],
+    [
+      "139:3527",
+      "Variant=Secondary, Size=LG, State=Disabled"
+    ],
+    [
+      "139:3531",
+      "Variant=Ghost, Size=XS, State=Hover"
+    ],
+    [
+      "139:3535",
+      "Variant=Ghost, Size=XS, State=Focus"
+    ],
+    [
+      "139:3539",
+      "Variant=Ghost, Size=XS, State=Disabled"
+    ],
+    [
+      "139:3543",
+      "Variant=Ghost, Size=SM, State=Hover"
+    ],
+    [
+      "139:3547",
+      "Variant=Ghost, Size=SM, State=Focus"
+    ],
+    [
+      "139:3551",
+      "Variant=Ghost, Size=SM, State=Disabled"
+    ],
+    [
+      "139:3555",
+      "Variant=Ghost, Size=Default, State=Hover"
+    ],
+    [
+      "139:3559",
+      "Variant=Ghost, Size=Default, State=Focus"
+    ],
+    [
+      "139:3563",
+      "Variant=Ghost, Size=Default, State=Disabled"
+    ],
+    [
+      "139:3567",
+      "Variant=Ghost, Size=LG, State=Hover"
+    ],
+    [
+      "139:3571",
+      "Variant=Ghost, Size=LG, State=Focus"
+    ],
+    [
+      "139:3575",
+      "Variant=Ghost, Size=LG, State=Disabled"
+    ]
+  ],
+  "Input": [
+    [
+      "11:42",
+      "State=Empty"
+    ],
+    [
+      "11:44",
+      "State=Filled"
+    ],
+    [
+      "11:46",
+      "State=Hover"
+    ],
+    [
+      "11:48",
+      "State=Focus"
+    ],
+    [
+      "11:50",
+      "State=Invalid"
+    ],
+    [
+      "11:52",
+      "State=Disabled"
+    ]
+  ],
+  "Textarea": [
+    [
+      "11:55",
+      "State=Empty"
+    ],
+    [
+      "11:57",
+      "State=Filled"
+    ],
+    [
+      "11:59",
+      "State=Hover"
+    ],
+    [
+      "11:61",
+      "State=Focus"
+    ],
+    [
+      "11:63",
+      "State=Invalid"
+    ],
+    [
+      "11:65",
+      "State=Disabled"
+    ]
+  ],
+  "Select": [
+    [
+      "11:68",
+      "Size=SM, State=Placeholder"
+    ],
+    [
+      "11:81",
+      "Size=SM, State=Selected"
+    ],
+    [
+      "11:94",
+      "Size=SM, State=Hover"
+    ],
+    [
+      "11:107",
+      "Size=SM, State=Focus"
+    ],
+    [
+      "11:120",
+      "Size=SM, State=Invalid"
+    ],
+    [
+      "11:133",
+      "Size=SM, State=Disabled"
+    ],
+    [
+      "11:146",
+      "Size=Default, State=Placeholder"
+    ],
+    [
+      "11:159",
+      "Size=Default, State=Selected"
+    ],
+    [
+      "11:172",
+      "Size=Default, State=Hover"
+    ],
+    [
+      "11:185",
+      "Size=Default, State=Focus"
+    ],
+    [
+      "11:198",
+      "Size=Default, State=Invalid"
+    ],
+    [
+      "11:211",
+      "Size=Default, State=Disabled"
+    ]
+  ],
+  "Checkbox": [
+    [
+      "11:225",
+      "Checked=Unchecked, State=Default"
+    ],
+    [
+      "11:226",
+      "Checked=Unchecked, State=Focus"
+    ],
+    [
+      "11:227",
+      "Checked=Unchecked, State=Disabled"
+    ],
+    [
+      "11:228",
+      "Checked=Checked, State=Default"
+    ],
+    [
+      "11:232",
+      "Checked=Checked, State=Focus"
+    ],
+    [
+      "11:236",
+      "Checked=Checked, State=Disabled"
+    ],
+    [
+      "11:240",
+      "Checked=Indeterminate, State=Default"
+    ],
+    [
+      "11:242",
+      "Checked=Indeterminate, State=Focus"
+    ],
+    [
+      "11:244",
+      "Checked=Indeterminate, State=Disabled"
+    ]
+  ],
+  "Tabs": [
+    [
+      "12:93",
+      "Variant=Default, Active=1"
+    ],
+    [
+      "12:100",
+      "Variant=Default, Active=2"
+    ],
+    [
+      "12:107",
+      "Variant=Default, Active=3"
+    ],
+    [
+      "12:114",
+      "Variant=Line, Active=1"
+    ],
+    [
+      "12:122",
+      "Variant=Line, Active=2"
+    ],
+    [
+      "12:130",
+      "Variant=Line, Active=3"
+    ],
+    [
+      "141:1136",
+      "Variant=Large, Active=1"
+    ],
+    [
+      "141:1144",
+      "Variant=Large, Active=2"
+    ],
+    [
+      "141:1152",
+      "Variant=Large, Active=3"
+    ]
+  ],
+  "Badge": [
+    [
+      "12:139",
+      "Variant=Default"
+    ],
+    [
+      "12:144",
+      "Variant=Destructive"
+    ],
+    [
+      "12:149",
+      "Variant=Outline"
+    ],
+    [
+      "12:154",
+      "Variant=Secondary"
+    ],
+    [
+      "12:159",
+      "Variant=Ghost"
+    ],
+    [
+      "12:164",
+      "Variant=Link"
+    ]
+  ],
+  "Avatar": [
+    [
+      "12:170",
+      "Role=Default"
+    ],
+    [
+      "12:172",
+      "Role=Buyer"
+    ],
+    [
+      "12:174",
+      "Role=Profile"
+    ],
+    [
+      "12:176",
+      "Role=System Agent"
+    ],
+    [
+      "12:178",
+      "Role=System Buyer"
+    ]
+  ],
+  "Tooltip": [
+    [
+      "12:181",
+      "Side=Top"
+    ],
+    [
+      "12:185",
+      "Side=Right"
+    ],
+    [
+      "12:189",
+      "Side=Bottom"
+    ],
+    [
+      "12:193",
+      "Side=Left"
+    ]
+  ],
+  "Content / Placeholder": [
+    [
+      "13:72",
+      ""
+    ]
+  ],
+  "Sheet": [
+    [
+      "13:90",
+      "Side=Right"
+    ],
+    [
+      "13:101",
+      "Side=Left"
+    ],
+    [
+      "13:112",
+      "Side=Top"
+    ],
+    [
+      "13:123",
+      "Side=Bottom"
+    ]
+  ],
+  "Toast": [
+    [
+      "13:135",
+      "Tone=Default"
+    ],
+    [
+      "13:143",
+      "Tone=Success"
+    ],
+    [
+      "13:152",
+      "Tone=Error"
+    ]
+  ],
+  "Sidebar / Nav Item": [
+    [
+      "14:101",
+      "Mode=Expanded, Active=No"
+    ],
+    [
+      "14:108",
+      "Mode=Expanded, Active=Yes"
+    ],
+    [
+      "14:115",
+      "Mode=Collapsed, Active=No"
+    ],
+    [
+      "14:122",
+      "Mode=Collapsed, Active=Yes"
+    ],
+    [
+      "14:129",
+      "Mode=Mobile, Active=No"
+    ],
+    [
+      "14:136",
+      "Mode=Mobile, Active=Yes"
+    ]
+  ],
+  "Sidebar": [
+    [
+      "14:144",
+      "Mode=Expanded, Active=Overview"
+    ],
+    [
+      "14:191",
+      "Mode=Expanded, Active=Properties"
+    ],
+    [
+      "14:238",
+      "Mode=Expanded, Active=Clients"
+    ],
+    [
+      "14:285",
+      "Mode=Expanded, Active=Chat"
+    ],
+    [
+      "14:332",
+      "Mode=Collapsed, Active=Overview"
+    ],
+    [
+      "14:367",
+      "Mode=Collapsed, Active=Properties"
+    ],
+    [
+      "14:402",
+      "Mode=Collapsed, Active=Clients"
+    ],
+    [
+      "14:437",
+      "Mode=Collapsed, Active=Chat"
+    ],
+    [
+      "14:472",
+      "Mode=Mobile, Active=Overview"
+    ],
+    [
+      "14:519",
+      "Mode=Mobile, Active=Properties"
+    ],
+    [
+      "14:566",
+      "Mode=Mobile, Active=Clients"
+    ],
+    [
+      "14:613",
+      "Mode=Mobile, Active=Chat"
+    ]
+  ],
+  "Chat Bubble": [
+    [
+      "14:661",
+      "Sender=Agent, Alignment=Start"
+    ],
+    [
+      "14:665",
+      "Sender=Agent, Alignment=End"
+    ],
+    [
+      "14:669",
+      "Sender=Buyer, Alignment=Start"
+    ],
+    [
+      "14:673",
+      "Sender=Buyer, Alignment=End"
+    ]
+  ],
+  "Icon / Generic": [
+    [
+      "10:2",
+      ""
+    ]
+  ],
+  "Icon / Chevron Down": [
+    [
+      "10:5",
+      ""
+    ]
+  ],
+  "Icon / Close": [
+    [
+      "10:8",
+      ""
+    ]
+  ],
+  "Icon / Check On Primary": [
+    [
+      "10:11",
+      ""
+    ]
+  ],
+  "Icon / Search": [
+    [
+      "10:14",
+      ""
+    ]
+  ],
+  "Icon / Success": [
+    [
+      "10:18",
+      ""
+    ]
+  ],
+  "Icon / Error": [
+    [
+      "10:22",
+      ""
+    ]
+  ],
+  "Icon / Send": [
+    [
+      "10:26",
+      ""
+    ]
+  ],
+  "Icon / Paperclip": [
+    [
+      "10:29",
+      ""
+    ]
+  ],
+  "Icon / Squares Four": [
+    [
+      "23:1377",
+      ""
+    ]
+  ],
+  "Icon / Users": [
+    [
+      "23:1380",
+      ""
+    ]
+  ],
+  "Icon / House": [
+    [
+      "23:1383",
+      ""
+    ]
+  ],
+  "Icon / Chat Circle": [
+    [
+      "23:1386",
+      ""
+    ]
+  ],
+  "Icon / Sidebar Simple": [
+    [
+      "23:1389",
+      ""
+    ]
+  ],
+  "Icon / Plus": [
+    [
+      "31:170",
+      ""
+    ]
+  ],
+  "Icon / Microphone": [
+    [
+      "31:173",
+      ""
+    ]
+  ],
+  "Icon / Arrow Up On Primary": [
+    [
+      "31:176",
+      ""
+    ]
+  ],
+  "Icon / FileMagnifyingGlass": [
+    [
+      "72:3507",
+      ""
+    ]
+  ],
+  "Icon / PencilSimple": [
+    [
+      "72:3508",
+      ""
+    ]
+  ],
+  "Icon / CaretRight": [
+    [
+      "82:4219",
+      ""
+    ]
+  ],
+  "Icon / ImageSquare": [
+    [
+      "87:4388",
+      ""
+    ]
+  ],
+  "Icon / Trash": [
+    [
+      "94:4617",
+      ""
+    ]
+  ],
+  "Icon / UploadSimple": [
+    [
+      "96:4699",
+      ""
+    ]
+  ],
+  "Icon / CaretUp": [
+    [
+      "97:4977",
+      ""
+    ]
+  ],
+  "Icon / Wrench": [
+    [
+      "136:6335",
+      ""
+    ]
+  ],
+  "Icon / Quotes": [
+    [
+      "136:6378",
+      ""
+    ]
+  ],
+  "Icon / CaretLeft": [
+    [
+      "147:6619",
+      ""
+    ]
+  ],
+  "Breadcrumb": [
+    [
+      "82:4231",
+      ""
+    ]
+  ],
+  "Empty state": [
+    [
+      "89:1076",
+      ""
+    ]
+  ],
+  "Progress bar with cancel": [
+    [
+      "95:4635",
+      ""
+    ]
+  ],
+  "Dialog": [
+    [
+      "13:74",
+      ""
+    ]
+  ],
+  "Severity": [
+    [
+      "27:11",
+      "Risk=High"
+    ],
+    [
+      "27:13",
+      "Risk=Medium"
+    ],
+    [
+      "27:15",
+      "Risk=Low"
+    ]
+  ],
+  "Evidence Row": [
+    [
+      "27:18",
+      ""
+    ]
+  ],
+  "Finding": [
+    [
+      "27:52",
+      "Risk=High, Expanded=Yes, Evidence=Yes"
+    ],
+    [
+      "27:97",
+      "Risk=Medium, Expanded=Yes, Evidence=Yes"
+    ],
+    [
+      "27:142",
+      "Risk=Low, Expanded=Yes, Evidence=Yes"
+    ],
+    [
+      "27:23",
+      "Risk=High, Expanded=No, Evidence=No"
+    ],
+    [
+      "27:32",
+      "Risk=High, Expanded=No, Evidence=Yes"
+    ],
+    [
+      "27:41",
+      "Risk=High, Expanded=Yes, Evidence=No"
+    ],
+    [
+      "27:68",
+      "Risk=Medium, Expanded=No, Evidence=No"
+    ],
+    [
+      "27:77",
+      "Risk=Medium, Expanded=No, Evidence=Yes"
+    ],
+    [
+      "27:86",
+      "Risk=Medium, Expanded=Yes, Evidence=No"
+    ],
+    [
+      "27:113",
+      "Risk=Low, Expanded=No, Evidence=No"
+    ],
+    [
+      "27:122",
+      "Risk=Low, Expanded=No, Evidence=Yes"
+    ],
+    [
+      "27:131",
+      "Risk=Low, Expanded=Yes, Evidence=No"
+    ]
+  ],
+  "Client Row": [
+    [
+      "27:178",
+      ""
+    ]
+  ],
+  "Property Summary": [
+    [
+      "27:195",
+      ""
+    ]
+  ],
+  "Report Section": [
+    [
+      "27:201",
+      ""
+    ]
+  ],
+  "Section Header": [
+    [
+      "123:6295",
+      ""
+    ]
+  ],
+  "Chat Composer": [
+    [
+      "31:179",
+      "Property 1=Input has value"
+    ],
+    [
+      "33:1745",
+      "Property 1=Input empty"
+    ]
+  ],
+  "Property Row": [
+    [
+      "27:159",
+      "House Image=Default"
+    ],
+    [
+      "87:4402",
+      "House Image=Placeholder"
+    ]
+  ],
+  "Report row": [
+    [
+      "119:5829",
+      "State=Unselected"
+    ],
+    [
+      "119:6193",
+      "State=Selected"
+    ]
+  ],
+  "Icon / Calendar": [
+    [
+      "272:1274",
+      ""
+    ]
+  ],
+  "Icon / Clock": [
+    [
+      "272:1278",
+      ""
+    ]
+  ]
+}

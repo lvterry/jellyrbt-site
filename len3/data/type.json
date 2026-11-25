@@ -1,0 +1,90 @@
+[
+  [
+    "Heading / Page",
+    24.0,
+    600.0,
+    30.0,
+    -0.84,
+    "Client, property and report page headings"
+  ],
+  [
+    "Heading / Property",
+    20.0,
+    600.0,
+    26.0,
+    -0.7,
+    "Report property headings"
+  ],
+  [
+    "Title / Directory",
+    18.0,
+    600.0,
+    22.5,
+    0.0,
+    "Client names and property list addresses"
+  ],
+  [
+    "Title / Section",
+    16.0,
+    600.0,
+    22.4,
+    -0.32,
+    "Report subheads"
+  ],
+  [
+    "Title / Finding",
+    16.0,
+    550.0,
+    22.8571,
+    -0.16,
+    "Findings"
+  ],
+  [
+    "Title / Row",
+    16.0,
+    500.0,
+    24.0,
+    0.0,
+    "Client report addresses"
+  ],
+  [
+    "Body / Reading",
+    16.0,
+    450.0,
+    26.4,
+    0.0,
+    "Reading content, renovation editor and client activity"
+  ],
+  [
+    "Body / Default",
+    14.0,
+    450.0,
+    21.0,
+    0.0,
+    "General body, contact values, sidebar navigation"
+  ],
+  [
+    "Body / Report",
+    14.0,
+    450.0,
+    23.1,
+    0.0,
+    "Finding details and evidence prose"
+  ],
+  [
+    "Label / Control",
+    12.0,
+    500.0,
+    17.1429,
+    0.0,
+    "Button, TabsTrigger and property tabs"
+  ],
+  [
+    "Caption / Status",
+    11.0,
+    450.0,
+    15.4,
+    0.0,
+    "Save status and system messages"
+  ]
+]
