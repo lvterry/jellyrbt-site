@@ -1,5 +1,5 @@
 import {
-  createFlock, step, setParams, perturb, polarization,
+  createFlock, step, setParams, perturb, polarization, cameraGoal,
   DEFAULT_PARAMS, WORLD,
 } from './flock3d.js';
 import { SKIES } from '../shared/sky.js';
@@ -20,7 +20,6 @@ const KNOBS = [
   { key: 'commitShare', label: 'Commit Share', min: 0, max: 0.6, step: 0.02, group: 'Response' },
   { key: 'commitTime', label: 'Commit Hold', min: 0, max: 1.5, step: 0.05, group: 'Response' },
   { key: 'startleRadius', label: 'Startle Size', min: 50, max: 240, step: 5, group: 'Startle' },
-  { key: 'startleEvery', label: 'Every', min: 1.5, max: 9, step: 0.5, group: 'Startle' },
   { key: 'zoom', label: 'Zoom', min: 0.6, max: 1.8, step: 0.02, group: 'Frame' },
   { key: 'size', label: 'Bird Size', min: 0.6, max: 2.4, step: 0.05, group: 'Frame' },
   { key: 'ink', label: 'Ink', min: 0.25, max: 0.9, step: 0.01, group: 'Frame' },
@@ -30,7 +29,7 @@ const KNOBS = [
 
 const FOLDER = { Response: 'response', Startle: 'startle', Frame: 'frame', Flock: 'flock' };
 const DIAL_KEY = {
-  startleRadius: 'startleSize', startleEvery: 'every', size: 'birdSize', ink: 'ink', birds: 'birds',
+  startleRadius: 'startleSize', size: 'birdSize', ink: 'ink', birds: 'birds',
 };
 const PATHS = new Map();
 
@@ -49,10 +48,19 @@ function buildConfig() {
     group[key] = [DEFAULT_PARAMS[knob.key], knob.min, knob.max, knob.step];
     PATHS.set(knob.key, [folder, key]);
   }
-  config.startle = { type: 'action', label: 'Startle now' };
+  config.randomize = { type: 'action', label: 'Randomize' };
   config.frame._collapsed = true;
   config.flock._collapsed = true;
   return config;
+}
+
+function randomSeed() {
+  if (globalThis.crypto?.getRandomValues) {
+    const buf = new Uint32Array(1);
+    crypto.getRandomValues(buf);
+    return buf[0] || 1;
+  }
+  return ((Math.random() * 0xffffffff) >>> 0) || 1;
 }
 
 createDialRoot({
@@ -64,19 +72,15 @@ createDialRoot({
 const kit = createDialKit('Propagation', buildConfig(), {
   persist: { key: 'murmurs.v3' },
   onAction: (action) => {
-    if (action === 'startle' && !syncing) {
-      perturb(flock);
-      nextStartle = flock.time + params.startleEvery;
-    }
+    if (!syncing && action === 'randomize') randomize();
   },
 });
 
 const params = { ...DEFAULT_PARAMS };
 const shown = { ...params };
-let flock = createFlock(params);
+let flock = createFlock(params, randomSeed());
 let syncing = false;
 let running = !motion.matches;
-let nextStartle = 2.5;
 let last = null;
 let frame = null;
 let dirty = true;
@@ -87,14 +91,24 @@ let focus = [...flock.centroid];
 // stays inside the canvas without hard-coding a zoom per parameter set.
 let fit = 1.8;
 
-function halfExtents() {
-  let mx = 0, my = 0;
-  for (let i = 0; i < flock.n; i++) {
+function halfExtents(center) {
+  // Use a soft upper bound (mean + 2.6 * std, capped by max) so a single stray
+  // bird never yanks the zoom out and makes the rest of the flock feel sluggish.
+  const n = flock.n;
+  let sx = 0, sy = 0, sxx = 0, syy = 0, mx = 0, my = 0;
+  for (let i = 0; i < n; i++) {
     const i3 = i * 3;
-    mx = Math.max(mx, Math.abs(torus(flock.pos[i3] - flock.centroid[0], WORLD.w)));
-    my = Math.max(my, Math.abs(torus(flock.pos[i3 + 1] - flock.centroid[1], WORLD.h)));
+    const ax = Math.abs(torus(flock.pos[i3] - center[0], WORLD.w));
+    const ay = Math.abs(torus(flock.pos[i3 + 1] - center[1], WORLD.h));
+    sx += ax; sy += ay;
+    sxx += ax * ax; syy += ay * ay;
+    if (ax > mx) mx = ax;
+    if (ay > my) my = ay;
   }
-  return [mx, my];
+  const meanX = sx / n, meanY = sy / n;
+  const stdX = Math.sqrt(Math.max(0, sxx / n - meanX * meanX));
+  const stdY = Math.sqrt(Math.max(0, syy / n - meanY * meanY));
+  return [Math.min(mx, meanX + 2.6 * stdX), Math.min(my, meanY + 2.6 * stdY)];
 }
 
 function gyration() {
@@ -119,12 +133,21 @@ function paramsFrom(values) {
   return next;
 }
 
+function randomize() {
+  flock = createFlock(params, randomSeed());
+  focus = [...flock.centroid];
+  const [halfX, halfY] = halfExtents(focus);
+  fit = Math.min(2.4, Math.max(0.85, Math.min((0.46 * WIDTH) / Math.max(60, halfX), (0.46 * HEIGHT) / Math.max(40, halfY))));
+  dirty = true;
+  ensureLoop();
+}
+
 function apply(next) {
   const birdsChanged = next.birds !== params.birds;
   Object.assign(params, next);
   Object.assign(shown, next);
-  if (birdsChanged) focus = [WORLD.w / 2, WORLD.h / 2, WORLD.d / 2];
   setParams(flock, params);
+  if (birdsChanged) focus = [...flock.centroid];
   dirty = true;
   ensureLoop();
 }
@@ -142,27 +165,44 @@ requestAnimationFrame(() => handle(kit.getValues()));
 
 /* ---------- Projection ---------- */
 
+const WORLD_SIZE = [WORLD.w, WORLD.h, WORLD.d];
+const wrap = (v, size) => (v < 0 ? ((v % size) + size) % size : v >= size ? v % size : v);
 const torus = (d, size) => (d > size / 2 ? d - size : d < -size / 2 ? d + size : d);
 const screenX = new Float32Array(3000);
 const screenY = new Float32Array(3000);
 const screenScale = new Float32Array(3000);
-const layers = [0, 1, 2];
+// Seven depth bands across the flock's real depth spread give smooth aerial
+// recession without birds popping between shades, at 7 fills per frame.
+const DEPTH_BANDS = 7;
+const DEPTH_RANGE = 150;
+const LAYER_ALPHA = Array.from({ length: DEPTH_BANDS }, (_, i) => 0.34 + (i / (DEPTH_BANDS - 1)) * 0.66);
 const bands = new Uint8Array(3000);
+const goal = [0, 0, 0];
+const ripples = [];
+// How far a turning bird leans: lift tilts toward the turn centre by roughly
+// this many units per rad/s of turn rate.
+const BANK = 0.9;
 
 function project() {
-  const { pos, n } = flock;
+  const { pos, vel, accumulator, n } = flock;
+  const lead = running ? accumulator : 0;
   const camDist = 950;
   const focal = camDist * fit * params.zoom;
+  const invSpan = DEPTH_BANDS / (2 * DEPTH_RANGE);
   for (let i = 0; i < n; i++) {
     const i3 = i * 3;
-    const dx = torus(pos[i3] - focus[0], WORLD.w);
-    const dy = torus(pos[i3 + 1] - focus[1], WORLD.h);
-    const dz = torus(pos[i3 + 2] - focus[2], WORLD.d);
+    const dx = torus(pos[i3] + vel[i3] * lead - focus[0], WORLD.w);
+    const dy = torus(pos[i3 + 1] + vel[i3 + 1] * lead - focus[1], WORLD.h);
+    const dz = torus(pos[i3 + 2] + vel[i3 + 2] * lead - focus[2], WORLD.d);
     const depth = dz + camDist;
     const scale = focal / depth;
     screenX[i] = WIDTH / 2 + dx * scale;
     screenY[i] = HEIGHT / 2 + dy * scale;
-    screenScale[i] = scale;
+    // Keep bird glyph size tied to perspective depth and user zoom, not auto-fit,
+    // so birds never shrink when the flock widens during a turn.
+    screenScale[i] = (camDist / depth) * params.zoom;
+    const b = ((DEPTH_RANGE - dz) * invSpan) | 0;
+    bands[i] = b < 0 ? 0 : b >= DEPTH_BANDS ? DEPTH_BANDS - 1 : b;
   }
 }
 
@@ -182,21 +222,62 @@ function draw() {
   project();
   const birds = params.birds;
   ctx.fillStyle = (SKIES[params.sky] ?? SKIES.dusk).ink;
-  for (let i = 0; i < birds; i++) {
-    const depth = torus(flock.pos[i * 3 + 2] - focus[2], WORLD.d);
-    bands[i] = depth > 18 ? 0 : depth > -18 ? 1 : 2;
-  }
-  // Far birds are demoted to a paler pass; near ones read as the dark core.
-  // One path per band keeps the fill count at three.
-  for (const layer of layers) {
-    ctx.globalAlpha = params.ink * (layer === 0 ? 0.45 : layer === 1 ? 0.75 : 1);
+  // Far birds are drawn paler, near birds darker, across 7 graded bands.
+  //
+  // Each bird is a 4-vertex swept-wing chevron pointing along its projected
+  // heading: a sharp nose leads the flight direction, swept-back wingtips open
+  // wider when the bird banks its wings toward the camera, and a V-notched tail
+  // makes heading unmistakable at a glance.
+  const { vel, omega } = flock;
+  for (let layer = 0; layer < DEPTH_BANDS; layer++) {
+    ctx.globalAlpha = params.ink * LAYER_ALPHA[layer];
     ctx.beginPath();
     for (let i = 0; i < birds; i++) {
       if (bands[i] !== layer) continue;
-      const size = Math.max(0.6, params.size * screenScale[i] * 0.9);
-      ctx.rect(screenX[i], screenY[i], size * 1.1, size);
+      const i3 = i * 3;
+      const v = Math.hypot(vel[i3], vel[i3 + 1], vel[i3 + 2]) || 1;
+      const ux = vel[i3] / v, uy = vel[i3 + 1] / v, uz = vel[i3 + 2] / v;
+      // Wing normal: world up (screen -y) made perpendicular to the heading,
+      // then tilted toward the turn centre (omega x heading).
+      const ox = omega[i3], oy = omega[i3 + 1], oz = omega[i3 + 2];
+      const nx = uy * ux + BANK * (oy * uz - oz * uy);
+      const ny = -1 + uy * uy + BANK * (oz * ux - ox * uz);
+      const nz = uy * uz + BANK * (ox * uy - oy * ux);
+      const nl = Math.hypot(nx, ny, nz) || 1;
+      const facing = Math.abs(nz / nl);
+      const hl = Math.hypot(ux, uy);
+      const ax = hl > 1e-3 ? ux / hl : 1, ay = hl > 1e-3 ? uy / hl : 0;
+      const s = Math.max(0.85, params.size * screenScale[i] * 1.45);
+      const nose = s * (0.5 + 1.35 * hl);
+      const sweep = s * (0.35 + 0.95 * hl);
+      const notch = s * (0.12 + 0.35 * hl);
+      const wing = s * (0.45 + 1.25 * facing);
+      const cx = screenX[i], cy = screenY[i];
+      const wx = -ay * wing, wy = ax * wing;
+      const sx = cx - ax * sweep, sy = cy - ay * sweep;
+      ctx.moveTo(cx + ax * nose, cy + ay * nose);
+      ctx.lineTo(sx + wx, sy + wy);
+      ctx.lineTo(cx - ax * notch, cy - ay * notch);
+      ctx.lineTo(sx - wx, sy - wy);
+      ctx.closePath();
     }
     ctx.fill();
+  }
+  // Subtle fading ink ring where the user clicked to startle the flock.
+  if (ripples.length > 0) {
+    const now = performance.now();
+    ctx.strokeStyle = (SKIES[params.sky] ?? SKIES.dusk).ink;
+    ctx.lineWidth = 1.2;
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const r = ripples[i];
+      const age = (now - r.at) / 420;
+      if (age >= 1) { ripples.splice(i, 1); continue; }
+      const ease = 1 - (1 - age) * (1 - age);
+      ctx.globalAlpha = (1 - age) * 0.22;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, 4 + ease * 28, 0, Math.PI * 2);
+      ctx.stroke();
+    }
   }
   ctx.globalAlpha = 1;
 }
@@ -212,22 +293,20 @@ function tick(now) {
   const dt = last === null ? 0 : Math.min((now - last) / 1000, 0.05);
   last = now;
 
-  if (running) {
-    step(flock, dt);
-    if (flock.time > nextStartle) {
-      perturb(flock);
-      nextStartle = flock.time + params.startleEvery;
-    }
-  }
+  if (running) step(flock, dt);
 
-  // The camera trails the flock so a wandering flock stays framed.
-  const k = running ? 1 - Math.exp(-dt * 2.2) : 1;
-  for (let i = 0; i < 3; i++) focus[i] += (flock.centroid[i] - focus[i]) * k;
-  // Fit every bird, not a radius estimate: a stretched or split flock would
-  // otherwise put part of itself outside the canvas.
-  const [halfX, halfY] = halfExtents();
-  const targetFit = Math.min(4.5, Math.max(0.5, Math.min((0.46 * WIDTH) / Math.max(60, halfX), (0.46 * HEIGHT) / Math.max(40, halfY))));
-  fit += (targetFit - fit) * (running ? 1 - Math.exp(-dt * 1.4) : 1);
+  // The camera hangs between the roost and the flock and follows loosely, so
+  // the flock's swoops read as motion across the sky. Shortest toroidal path
+  // keeps a seam crossing from whipping the view.
+  cameraGoal(flock, goal);
+  const k = running ? 1 - Math.exp(-dt * 1.2) : 1;
+  for (let i = 0; i < 3; i++) {
+    focus[i] = wrap(focus[i] + torus(goal[i] - focus[i], WORLD_SIZE[i]) * k, WORLD_SIZE[i]);
+  }
+  // Fit the flock gently so brief shape changes during a turn don't pump the zoom.
+  const [halfX, halfY] = halfExtents(focus);
+  const targetFit = Math.min(2.4, Math.max(0.85, Math.min((0.46 * WIDTH) / Math.max(60, halfX), (0.46 * HEIGHT) / Math.max(40, halfY))));
+  fit += (targetFit - fit) * (running ? 1 - Math.exp(-dt * 0.45) : 1);
 
   draw();
   updateReadout();
@@ -245,7 +324,7 @@ function updateReadout() {
   const lag = `${Math.round(shown.lag)} ms lag`;
   if (at < 0) {
     readout.textContent = running
-      ? `First turn in ${Math.max(0, nextStartle - flock.time).toFixed(1)}s · ${lag}`
+      ? `Click the sky to startle · ${lag}`
       : `${Math.round(polarization(flock) * 100)}% aligned · ${lag}`;
     return;
   }
@@ -268,6 +347,35 @@ function resize() {
   dirty = true;
   ensureLoop();
 }
+
+function startleAt(x, y) {
+  const n = flock.n;
+  let anchor = 0;
+  let best = Infinity;
+  for (let i = 0; i < n; i++) {
+    const dx = screenX[i] - x;
+    const dy = screenY[i] - y;
+    const d2 = dx * dx + dy * dy;
+    if (d2 < best) { best = d2; anchor = i; }
+  }
+  const scale = fit * params.zoom;
+  const clickWx = wrap(focus[0] + (x - WIDTH / 2) / scale, WORLD.w);
+  const clickWy = wrap(focus[1] + (y - HEIGHT / 2) / scale, WORLD.h);
+  perturb(flock, { anchor, awayFrom: [clickWx, clickWy, focus[2]] });
+  ripples.push({ x, y, at: performance.now() });
+  dirty = true;
+  ensureLoop();
+}
+
+canvas.style.cursor = 'pointer';
+canvas.addEventListener('pointerdown', (e) => {
+  if (e.button !== 0) return;
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const x = ((e.clientX - rect.left) / rect.width) * WIDTH;
+  const y = ((e.clientY - rect.top) / rect.height) * HEIGHT;
+  startleAt(x, y);
+});
 
 motion.addEventListener('change', ({ matches }) => {
   running = !matches;
